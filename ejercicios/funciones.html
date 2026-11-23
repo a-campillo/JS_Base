@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios: Funciones — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Ejercicios">
+    <a class="brand" href="../index.html#closures"><img src="../assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab" href="sintaxis-y-variables.html">01 · Variables</a>
+    <a class="tab" href="operadores.html">03 · Operadores</a>
+    <a class="tab current" href="funciones.html" aria-current="page">05 · Funciones</a>
+    <a class="tab" href="objetos-y-arrays.html">06 · Arrays</a>
+    <a class="tab" href="asincronia.html">07 · Asincronía</a>
+  </nav>
+
+  <span class="kicker">Ejercicios · 05 Funciones</span>
+  <h1>Ejercicios: Funciones</h1>
+
+  <section class="exercise" id="quiz-closures">
+    <div class="exercise-head">
+      <h2>Quiz: la trampa clásica de los closures 🪤</h2>
+      <a class="back-slide" href="../index.html#closures">← Volver a la diapositiva</a>
+    </div>
+  <div class="cols even">
+    <div>
+      <div class="quiz" data-answer="2">
+        <p class="q">¿Qué imprime esto?</p>
+<textarea class="snippet">
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+</textarea>
+        <div class="opts"><button>0 1 2</button><button>0 0 0</button><button>3 3 3</button><button>undefined ×3</button></div>
+        <p class="explain" hidden><code>var</code> crea <b>una sola</b> <code>i</code> compartida por todo el bucle. Cuando se ejecutan los callbacks, el bucle ya terminó e <code>i</code> vale <code>3</code>. Con <code>let</code>, cada iteración tiene su <b>propia</b> variable → <code>0 1 2</code>.</p>
+      </div>
+    </div>
+    <div>
+<textarea class="code" data-name="trampa-closure.js">
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log("var:", i), 0);
+}
+
+for (let j = 0; j < 3; j++) {
+  setTimeout(() => console.log("let:", j), 0);
+}
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Pregunta clásica de entrevista. Primero votación, luego ejecuta.</li>
+      <li>Puente hacia el bloque de asincronía: los callbacks de <code>setTimeout</code> se ejecutan cuando termina el código actual.</li>
+    </ul>
+  </details>
+  </section>
+
+  <section class="exercise" id="reto-palindromo">
+    <div class="exercise-head">
+      <h2>Reto: <code>isPalindrome(text)</code> 🏆</h2>
+      <a class="back-slide" href="../index.html#this">← Volver a la diapositiva</a>
+    </div>
+  <div class="cols">
+    <div>
+      <p>Escribe una función que devuelva <code>true</code> si el texto se lee igual al derecho y al revés, <b>ignorando mayúsculas, espacios y puntuación</b>.</p>
+<textarea class="snippet">
+isPalindrome("reconocer")            // true
+isPalindrome("Anita lava la tina")   // true
+isPalindrome("JavaScript")           // false
+</textarea>
+      <p class="small muted">Pistas: <code>toLowerCase()</code>, <code>replace(/[^a-z0-9]/g, "")</code>, <code>split("")</code>, <code>reverse()</code>, <code>join("")</code>.</p>
+    </div>
+    <div>
+<textarea class="code" data-name="reto-1.js" data-challenge="isPalindrome" data-tests='[[["reconocer"],true],[["Hola"],false],[["Anita lava la tina"],true],[[""],true],[["Yo hago yoga hoy"],true],[["JavaScript"],false]]'>
+function isPalindrome(text) {
+  // 1. Normaliza: minúsculas, solo letras y dígitos
+  // 2. Compáralo con su reverso
+}
+</textarea>
+<textarea class="solution">
+function isPalindrome(text) {
+  const clean = text.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return clean === clean.split("").reverse().join("");
+}
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Da 3–4 minutos. Invita a alguien a escribir su solución en la pantalla compartida.</li>
+      <li>Solución alternativa: un bucle con dos punteros desde ambos extremos.</li>
+      <li>Extra: con tildes (“Dábale arroz…”) haría falta <code>normalize("NFD")</code> para quitar los acentos.</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

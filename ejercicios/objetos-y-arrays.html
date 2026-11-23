@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios: Objetos y arrays — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Ejercicios">
+    <a class="brand" href="../index.html#metodos-array"><img src="../assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab" href="sintaxis-y-variables.html">01 · Variables</a>
+    <a class="tab" href="operadores.html">03 · Operadores</a>
+    <a class="tab" href="funciones.html">05 · Funciones</a>
+    <a class="tab current" href="objetos-y-arrays.html" aria-current="page">06 · Arrays</a>
+    <a class="tab" href="asincronia.html">07 · Asincronía</a>
+  </nav>
+
+  <span class="kicker">Ejercicios · 06 Objetos y arrays</span>
+  <h1>Ejercicios: Objetos y arrays</h1>
+
+  <section class="exercise" id="reto-adultos">
+    <div class="exercise-head">
+      <h2>Reto: <code>getAdultNames(people)</code> 🏆</h2>
+      <a class="back-slide" href="../index.html#metodos-array">← Volver a la diapositiva</a>
+    </div>
+  <div class="cols">
+    <div>
+      <p>Dado un array de objetos <code>{ name, age }</code>, devuelve los <b>nombres</b> de todas las personas con <b>18 años o más</b>, ordenados <b>alfabéticamente</b>.</p>
+<textarea class="snippet">
+getAdultNames([
+  { name: "Zoe", age: 22 },
+  { name: "Ana", age: 17 },
+  { name: "Luis", age: 30 },
+]);
+// → ["Luis", "Zoe"]
+</textarea>
+      <p class="small muted">Pista: encadena <code>filter</code> → <code>map</code> → <code>sort</code>.</p>
+    </div>
+    <div>
+<textarea class="code" data-name="reto-2.js" data-challenge="getAdultNames" data-tests='[[[[{"name":"Zoe","age":22},{"name":"Ana","age":17},{"name":"Luis","age":30}]],["Luis","Zoe"]],[[[]],[]],[[[{"name":"Bob","age":18}]],["Bob"]],[[[{"name":"Niño","age":5},{"name":"Teen","age":15}]],[]],[[[{"name":"Mia","age":40},{"name":"Carl","age":19},{"name":"Eva","age":65}]],["Carl","Eva","Mia"]]]'>
+function getAdultNames(people) {
+  // tu código aquí
+}
+</textarea>
+<textarea class="solution">
+const getAdultNames = people =>
+  people
+    .filter(person => person.age >= 18)
+    .map(person => person.name)
+    .sort();
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Buen momento para mostrar que la solución es una sola cadena legible: sin bucles ni variables temporales.</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

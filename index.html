@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentos de JavaScript — Presentación interactiva</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+<!-- =====================================================================
+     00 · INTRODUCCIÓN
+     ===================================================================== -->
+<section class="slide title-slide" data-section="Introducción" data-title="Bienvenida">
+  <div class="logo-plate"><img src="assets/logo-chicas-programadoras.png" alt="Chicas Programadoras Club"></div>
+  <h1>Fundamentos de <span class="hl">JavaScript</span></h1>
+  <p class="lead">Sintaxis · Tipos · Operadores · Funciones — un recorrido interactivo por el lenguaje que mueve la web.</p>
+  <p class="hint">Navega con <kbd>←</kbd> <kbd>→</kbd> · Ejecuta código con <kbd>Ctrl</kbd>+<kbd>Enter</kbd> · <kbd>M</kbd> menú · <kbd>N</kbd> notas · <kbd>F</kbd> pantalla completa</p>
+  <aside class="notes">
+    <ul>
+      <li>Bienvenida. Es una sesión práctica: todos los bloques de código son editables y se pueden ejecutar.</li>
+      <li>Invita a abrir las DevTools (F12) para seguir el ritmo, o simplemente a gritar sus predicciones.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Introducción" data-title="Agenda">
+  <span class="kicker">Agenda · ~90 min</span>
+  <h2>Lo que veremos hoy</h2>
+  <div class="agenda">
+    <button data-goto="Introducción"><span class="n">00</span><span class="t">Introducción</span><span class="d">5 min</span><span class="s">Qué es JS, historia, dónde se ejecuta</span></button>
+    <button data-goto="Sintaxis y variables"><span class="n">01</span><span class="t">Sintaxis y variables</span><span class="d">10 min</span><span class="s">Sentencias, comentarios, var / let / const, hoisting</span></button>
+    <button data-goto="Tipos de datos"><span class="n">02</span><span class="t">Tipos de datos</span><span class="d">10 min</span><span class="s">Primitivos, objetos, typeof, valor vs. referencia</span></button>
+    <button data-goto="Operadores"><span class="n">03</span><span class="t">Operadores</span><span class="d">15 min</span><span class="s">Aritméticos, == vs ===, coerción, lógicos, ?? y ?.</span></button>
+    <button data-goto="Control de flujo"><span class="n">04</span><span class="t">Control de flujo</span><span class="d">8 min</span><span class="s">if / switch, for, while, for…of, for…in</span></button>
+    <button data-goto="Funciones"><span class="n">05</span><span class="t">Funciones</span><span class="d">20 min</span><span class="s">Declaraciones, flechas, parámetros, closures, this</span></button>
+    <button data-goto="Objetos y arrays"><span class="n">06</span><span class="t">Objetos y arrays</span><span class="d">10 min</span><span class="s">Desestructuración, spread, map / filter / reduce</span></button>
+    <button data-goto="Errores y asincronía"><span class="n">07</span><span class="t">Errores y asincronía</span><span class="d">7 min</span><span class="s">try / catch, event loop, Promesas, async / await</span></button>
+    <button data-goto="Cierre"><span class="n">08</span><span class="t">Cierre</span><span class="d">5 min</span><span class="s">Hoja de referencia, quiz final, recursos, preguntas</span></button>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Las tarjetas se pueden pulsar: úsalas para saltar de sección si el tiempo aprieta.</li>
+      <li>Los bloques más pesados son Operadores y Funciones. Control de flujo se puede comprimir.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide divider" data-section="Introducción" data-title="Sección: Introducción">
+  <div class="big-num">00</div>
+  <h1>Introducción</h1>
+  <div class="topics"><span class="chip">qué es JS</span><span class="chip">historia</span><span class="chip">ECMAScript</span><span class="chip">dónde se ejecuta</span><span class="chip">console.log</span></div>
+</section>
+
+<section class="slide" data-section="Introducción" data-title="¿Qué es JavaScript?">
+  <span class="kicker">00 · Introducción</span>
+  <h2>¿Qué es JavaScript?</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Creado en <b>1995</b> por Brendan Eich en Netscape, en unos <b>10 días</b>.</li>
+        <li>Estandarizado como <b>ECMAScript</b>. ES2015 (“ES6”) modernizó el lenguaje; desde entonces sale una versión nueva <b>cada año</b>.</li>
+        <li><b>Se ejecuta en todas partes:</b> navegadores, servidores (Node.js, Deno, Bun), móviles, escritorio (Electron), IoT.</li>
+        <li><b>Tipado dinámico</b>: las variables no tienen tipo, los valores sí.</li>
+        <li><b>Un solo hilo</b> con un event loop para el trabajo asíncrono.</li>
+        <li><b>Multiparadigma:</b> imperativo, orientado a objetos (prototipos), funcional.</li>
+      </ul>
+      <div class="callout">Dato curioso: JavaScript no tiene nada que ver con Java. El nombre fue una decisión de marketing de 1995. ☕</div>
+    </div>
+    <div class="card">
+      <h3>Una breve línea de tiempo</h3>
+      <ul class="timeline">
+        <li><b>1995</b> Mocha → LiveScript → JavaScript</li>
+        <li><b>1997</b> Estándar ECMAScript 1</li>
+        <li><b>2005</b> Era AJAX: Gmail, Google Maps</li>
+        <li><b>2009</b> ES5 · Node.js lleva JS a los servidores</li>
+        <li><b>2015</b> ES2015: <code>let</code>, <code>const</code>, flechas, clases, módulos, Promesas</li>
+        <li><b>2017</b> <code>async</code> / <code>await</code></li>
+        <li><b>2020</b> <code>??</code>, <code>?.</code>, BigInt</li>
+        <li><b>Hoy</b> Versiones anuales (ES2016 … ES2025+)</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Recalca: ECMAScript = la especificación; JavaScript = la implementación que usamos.</li>
+      <li>El “tipado dinámico” volverá en Tipos de datos y Operadores: ahí están la mayoría de las sorpresas.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Introducción" data-title="Tu primer programa">
+  <span class="kicker">00 · Introducción</span>
+  <h2>Hola, JavaScript 👋</h2>
+  <div class="cols">
+    <div>
+      <p>Tres formas de ejecutar JavaScript:</p>
+      <ul class="points">
+        <li><b>Consola de las DevTools</b>: presiona <kbd>F12</kbd> → Console.</li>
+        <li><b>En una página web</b>: <code>&lt;script src="app.js"&gt;&lt;/script&gt;</code></li>
+        <li><b>En tu máquina</b>: <code>node app.js</code></li>
+      </ul>
+      <p><code>console.log()</code> es tu mejor amigo: imprime cualquier valor.</p>
+      <div class="callout good">Todos los bloques de código de esta presentación son <b>editables</b>. Cámbialos y presiona <kbd>Ctrl</kbd>+<kbd>Enter</kbd>.</div>
+    </div>
+    <div>
+<textarea class="code" data-name="hola.js">
+// Presiona Ctrl+Enter (o ▶ Ejecutar) para correr el código
+console.log("¡Hola, JavaScript! 👋");
+
+const company = "Globant";
+console.log(`Bienvenidos a ${company}`);
+
+console.log(2 + 3 * 4);
+console.log([1, 2, 3], { language: "JS", year: 1995 });
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Ejecútalo en vivo. Luego cambia el nombre de la empresa o la operación y vuelve a ejecutar.</li>
+      <li>Señala el string con comillas invertidas: volveremos a los template literals.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     01 · SINTAXIS Y VARIABLES
+     ===================================================================== -->
+<section class="slide divider" data-section="Sintaxis y variables" data-title="Sección: Sintaxis y variables">
+  <div class="big-num">01</div>
+  <h1>Sintaxis y variables</h1>
+  <div class="topics"><span class="chip">sentencias</span><span class="chip">comentarios</span><span class="chip">identificadores</span><span class="chip">var</span><span class="chip">let</span><span class="chip">const</span><span class="chip">hoisting</span></div>
+</section>
+
+<section class="slide" data-section="Sintaxis y variables" data-title="Sintaxis básica">
+  <span class="kicker">01 · Sintaxis</span>
+  <h2>Los bloques de construcción</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Las <b>sentencias</b> realizan acciones y terminan en <code>;</code> (opcional gracias a ASI, pero recomendado).</li>
+        <li>Las <b>expresiones</b> producen un valor: <code>2 + 2</code>, <code>"a" + "b"</code>, <code>isValid</code>.</li>
+        <li>Los <b>bloques</b> agrupan sentencias con <code>{ }</code>.</li>
+        <li><b>Comentarios:</b> <code>// de línea</code> y <code>/* de bloque */</code>.</li>
+        <li><b>Distingue mayúsculas:</b> <code>myName</code> ≠ <code>myname</code>.</li>
+        <li><b>Identificadores:</b> letras, dígitos, <code>$</code> y <code>_</code>; no pueden empezar por un dígito. Usa <b>camelCase</b>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="sintaxis.js">
+// Comentario de una línea
+/* Comentario de
+   varias líneas */
+
+let myName = "Ada";     // camelCase es la convención
+let myname = "Grace";   // ¡otra variable distinta! (distingue mayúsculas)
+console.log(myName, myname);
+
+// Expresión → produce un valor
+console.log(10 * 2 + 1);
+
+// Sentencia → realiza una acción
+if (myName.length > 2) {
+  console.log("Este bloque se ejecutó");
+}
+
+let $price = 9.99, _isPrivate = true;  // $ y _ son válidos
+console.log($price, _isPrivate);
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>ASI = Automatic Semicolon Insertion (inserción automática de punto y coma). Mejor que el equipo use un linter/formateador (ESLint + Prettier) en lugar de debatir sobre el punto y coma.</li>
+      <li>Prueba: renombra <code>myName</code> en un solo lugar y ejecuta para ver un ReferenceError.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Sintaxis y variables" data-title="var, let y const" data-slug="var-let-const">
+  <span class="kicker">01 · Variables</span>
+  <h2><code>var</code>, <code>let</code> y <code>const</code></h2>
+  <div class="cols">
+    <div>
+      <table class="grid">
+        <thead><tr><th></th><th>Alcance</th><th>Reasignar</th><th>Redeclarar</th></tr></thead>
+        <tbody>
+          <tr><td><code>var</code></td><td>función</td><td class="ok">✔</td><td class="ok">✔</td></tr>
+          <tr><td><code>let</code></td><td>bloque</td><td class="ok">✔</td><td class="bad">✘</td></tr>
+          <tr><td><code>const</code></td><td>bloque</td><td class="bad">✘</td><td class="bad">✘</td></tr>
+        </tbody>
+      </table>
+      <div class="callout good"><b>Regla práctica:</b> usa <code>const</code> por defecto, <code>let</code> cuando necesites reasignar y evita <code>var</code>.</div>
+      <div class="callout warn"><code>const</code> hace constante la <b>referencia</b>, no el valor. Los objetos y arrays todavía se pueden modificar.</div>
+      <p class="small muted">Pruébalo: descomenta la línea <code>pi = 3</code> y ejecuta de nuevo.</p>
+      <a class="exercise-link" href="ejercicios/sintaxis-y-variables.html#quiz-hoisting"><span class="i">🏋️</span><span class="t"><b>Ejercicio</b>Quiz: hoisting</span><span class="go">→</span></a>
+    </div>
+    <div>
+<textarea class="code" data-name="variables.js">
+const pi = 3.14159;
+let counter = 0;
+counter = counter + 1;      // ✅ let se puede reasignar
+console.log("counter:", counter);
+
+// pi = 3;                  // ❌ TypeError
+
+// const ≠ inmutable
+const user = { name: "Ana" };
+user.name = "Luis";         // ✅ modificar el objeto está permitido
+console.log(user);
+
+// Alcance de bloque
+if (true) {
+  var a = "var se escapa de los bloques";
+  let b = "let se queda adentro";
+}
+console.log(a);
+console.log(typeof b);      // aquí afuera b no existe
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Descomenta <code>pi = 3</code> en vivo para mostrar el TypeError en la consola.</li>
+      <li>El alcance de bloque es la razón principal para preferir <code>let</code>/<code>const</code>: menos fugas accidentales.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     02 · TIPOS DE DATOS
+     ===================================================================== -->
+<section class="slide divider" data-section="Tipos de datos" data-title="Sección: Tipos de datos">
+  <div class="big-num">02</div>
+  <h1>Tipos de datos</h1>
+  <div class="topics"><span class="chip">primitivos</span><span class="chip">objetos</span><span class="chip">typeof</span><span class="chip">strings</span><span class="chip">números</span><span class="chip">valor vs. referencia</span></div>
+</section>
+
+<section class="slide" data-section="Tipos de datos" data-title="Tipos y typeof">
+  <span class="kicker">02 · Tipos de datos</span>
+  <h2>7 primitivos + objetos</h2>
+  <div class="cols">
+    <div>
+      <div class="types">
+        <div class="type-card"><b>string</b><span>"hola", 'hola', `hola`</span></div>
+        <div class="type-card"><b>number</b><span>42, 3.14, NaN</span></div>
+        <div class="type-card"><b>bigint</b><span>9007199254740993n</span></div>
+        <div class="type-card"><b>boolean</b><span>true, false</span></div>
+        <div class="type-card"><b>undefined</b><span>sin asignar</span></div>
+        <div class="type-card"><b>null</b><span>vacío a propósito</span></div>
+        <div class="type-card"><b>symbol</b><span>Symbol("id")</span></div>
+        <div class="type-card obj"><b>object</b><span>{ }, [ ], funciones, Date, Map, Set, …</span></div>
+      </div>
+      <div class="callout">Las variables no tienen tipo; los <b>valores</b> sí. <code>let v = 1; v = "ahora un string";</code> es perfectamente válido.</div>
+    </div>
+    <div>
+<textarea class="code" data-name="typeof.js">
+console.log(typeof "hola");        // string
+console.log(typeof 42);            // number
+console.log(typeof 42n);           // bigint
+console.log(typeof true);          // boolean
+console.log(typeof undefined);     // undefined
+console.log(typeof Symbol("id"));  // symbol
+console.log(typeof null);          // 😱 "object": un bug de 1995
+console.log(typeof { a: 1 });      // object
+console.log(typeof [1, 2]);        // ¡object!
+console.log(typeof function () {}); // function
+
+console.log(Array.isArray([1, 2])); // ✅ así se comprueba un array
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li><code>typeof null === "object"</code> es un bug que nunca se podrá corregir sin romper la web.</li>
+      <li>Las funciones también son objetos; <code>typeof</code> simplemente las reporta de forma especial.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Tipos de datos" data-title="Strings">
+  <span class="kicker">02 · Tipos de datos</span>
+  <h2>Strings y template literals</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Tres tipos de comillas: <code>'simples'</code>, <code>"dobles"</code>, <code>`invertidas`</code>.</li>
+        <li>Los <b>template literals</b> permiten interpolar <code>${expr}</code> y texto de varias líneas.</li>
+        <li>Los strings son <b>inmutables</b>: sus métodos devuelven strings nuevos.</li>
+        <li>Métodos útiles: <code>length</code>, <code>toUpperCase</code>, <code>includes</code>, <code>slice</code>, <code>split</code>, <code>trim</code>, <code>replace</code>, <code>padStart</code>, <code>at</code>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="strings.js">
+const first = "Ada";
+const last = 'Lovelace';
+const full = `${first} ${last}`;     // template literal
+console.log(full);
+console.log(full.length);
+console.log(full.toUpperCase());
+console.log(full.includes("Love"));
+console.log(full.slice(0, 3), full.at(-1));
+console.log(full.split(" "));
+console.log("  límpiame  ".trim() + "!");
+console.log("7".padStart(3, "0"));
+
+const multiline = `Línea 1
+Línea 2 → total: ${2 + 3}`;
+console.log(multiline);
+
+let s = "gato";
+s[0] = "p";        // se ignora en silencio
+console.log(s);    // sigue siendo "gato": los strings son inmutables
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Los template literals aceptan cualquier expresión dentro de <code>${}</code>, incluidas llamadas a funciones y ternarios.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Tipos de datos" data-title="Números">
+  <span class="kicker">02 · Tipos de datos</span>
+  <h2>Números (y sus rarezas)</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Un solo tipo <code>number</code> para enteros y decimales (punto flotante de 64 bits).</li>
+        <li><code>0.1 + 0.2 !== 0.3</code>: no es un bug de JS, así funciona el punto flotante binario.</li>
+        <li><code>NaN</code> (“Not a Number”) es un número… y no es igual a sí mismo. Usa <code>Number.isNaN()</code>.</li>
+        <li>Dividir entre cero da <code>Infinity</code>, no un error.</li>
+        <li>Los enteros mayores que <code>2<sup>53</sup> − 1</code> pierden precisión → usa <code>BigInt</code>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="numeros.js">
+console.log(0.1 + 0.2);              // ¡punto flotante!
+console.log((0.1 + 0.2).toFixed(2));
+console.log(7 / 2, Math.floor(7 / 2), 7 % 2);
+console.log(1 / 0, -1 / 0);
+
+console.log("abc" * 2);              // NaN
+console.log(NaN === NaN);            // ¡false!
+console.log(Number.isNaN("abc" * 2));
+
+console.log(Number("42"), parseInt("42px"), parseFloat("3.5em"));
+console.log(Number("42px"));         // NaN: Number() es estricto
+
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(9007199254740992 + 1);   // se pierde precisión
+console.log(9007199254740992n + 1n); // BigInt ✅
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Para dinero, trabaja en centavos (enteros) o usa una librería de decimales.</li>
+      <li><code>parseInt</code> lee hasta donde puede; <code>Number</code> exige que todo el string sea numérico.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Tipos de datos" data-title="Valor vs. referencia">
+  <span class="kicker">02 · Tipos de datos</span>
+  <h2>Valor vs. referencia</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Los <b>primitivos</b> se copian <b>por valor</b>: cada variable tiene su propia copia.</li>
+        <li>Los <b>objetos</b> (incluidos arrays y funciones) se copian <b>por referencia</b>: las variables apuntan al <i>mismo</i> objeto.</li>
+        <li><code>===</code> entre objetos compara <b>identidad</b>, no contenido.</li>
+        <li>Usa spread <code>{ ...obj }</code> / <code>[...arr]</code> para copias superficiales y <code>structuredClone()</code> para copias profundas.</li>
+      </ul>
+      <div class="callout warn">La mayoría de los bugs del tipo “¡mis datos cambiaron solos!” vienen de referencias compartidas.</div>
+    </div>
+    <div>
+<textarea class="code" data-name="referencias.js">
+// Primitivos → se copian por valor
+let a = 10;
+let b = a;
+b = 20;
+console.log(a, b);        // 10 20
+
+// Objetos → se copian por referencia
+const o1 = { score: 10 };
+const o2 = o1;
+o2.score = 99;
+console.log(o1.score);    // 99: ¡es el mismo objeto!
+
+// Mejor haz una copia (superficial)
+const o3 = { ...o1 };
+o3.score = 0;
+console.log(o1.score, o3.score);
+
+console.log({} === {});   // false: dos objetos distintos
+console.log(o1 === o2);   // true: la misma referencia
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Analogía: un primitivo es una fotocopia de un documento; una variable con un objeto es un enlace compartido a un Google Doc.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     03 · OPERADORES
+     ===================================================================== -->
+<section class="slide divider" data-section="Operadores" data-title="Sección: Operadores">
+  <div class="big-num">03</div>
+  <h1>Operadores</h1>
+  <div class="topics"><span class="chip">+ - * / % **</span><span class="chip">= += ++</span><span class="chip">== vs ===</span><span class="chip">coerción</span><span class="chip">&amp;&amp; || !</span><span class="chip">?? ?. ?:</span><span class="chip">...spread</span></div>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="Aritméticos y de asignación">
+  <span class="kicker">03 · Operadores</span>
+  <h2>Aritméticos y de asignación</h2>
+  <div class="cols">
+    <div>
+      <table class="grid">
+        <thead><tr><th>Operador</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><code>+ - * /</code></td><td>matemática básica</td><td><code>7 / 2 → 3.5</code></td></tr>
+          <tr><td><code>%</code></td><td>residuo</td><td><code>7 % 2 → 1</code></td></tr>
+          <tr><td><code>**</code></td><td>potencia</td><td><code>2 ** 3 → 8</code></td></tr>
+          <tr><td><code>++ --</code></td><td>incremento / decremento</td><td><code>i++</code></td></tr>
+          <tr><td><code>+= -= *= /=</code></td><td>asignación compuesta</td><td><code>x += 5</code></td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><code>+</code> tiene doble función: si alguno de los lados es un string, <b>concatena</b>. Los demás operadores aritméticos siempre convierten a número.</div>
+    </div>
+    <div>
+<textarea class="code" data-name="aritmetica.js">
+let x = 10;
+console.log(x + 3, x - 3, x * 3, x / 3);
+console.log(x % 3);     // residuo
+console.log(2 ** 10);   // potencia
+
+x += 5;    // x = x + 5
+x *= 2;    // x = x * 2
+console.log(x);
+
+let i = 1;
+console.log(i++);   // devuelve 1 y LUEGO incrementa
+console.log(i);     // 2
+console.log(++i);   // incrementa PRIMERO → 3
+
+console.log("3" + 4);   // "34": ¡concatenación!
+console.log("3" - 1);   // 2: numérico
+console.log(+"3" + 4);  // 7: el + unario convierte a número
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Pregunta: ¿cuánto vale x al final? (30). Luego ejecuta.</li>
+      <li>Prefijo vs. sufijo solo importa cuando usas el valor de la expresión.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="== vs ===" data-slug="comparacion">
+  <span class="kicker">03 · Operadores</span>
+  <h2>Comparación: <code>==</code> vs <code>===</code></h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><code>===</code> igualdad <b>estricta</b>: mismo tipo <i>y</i> mismo valor. Sin conversiones.</li>
+        <li><code>==</code> igualdad <b>débil</b>: primero convierte los tipos, con reglas sorprendentes.</li>
+        <li><code>!==</code> / <code>!=</code> son sus versiones negadas.</li>
+        <li><code>&lt; &gt; &lt;= &gt;=</code> comparan números, o strings alfabéticamente (¡<code>"10" &lt; "9"</code> es <code>true</code>!).</li>
+        <li><code>Object.is(a, b)</code> es como <code>===</code>, pero considera <code>NaN</code> igual a sí mismo.</li>
+      </ul>
+      <div class="callout good"><b>Usa siempre <code>===</code> y <code>!==</code>.</b> La única excepción común: <code>x == null</code> comprueba a la vez <code>null</code> y <code>undefined</code>.</div>
+      <a class="exercise-link" href="ejercicios/operadores.html#coercion"><span class="i">🎯</span><span class="t"><b>Ejercicio</b>Coerción de tipos: ¡adivina!</span><span class="go">→</span></a>
+    </div>
+    <div class="widget" data-widget="equality">
+      <h3>Explorador de igualdad</h3>
+      <div class="row"><select class="eq-a" aria-label="Valor izquierdo"></select><span class="muted">vs</span><select class="eq-b" aria-label="Valor derecho"></select></div>
+      <div class="eq-results"></div>
+      <div class="row" style="margin-top:12px"><span class="muted small">Matriz:</span><button class="btn on" data-mode="==">==</button><button class="btn" data-mode="===">===</button><span class="muted small">— celda coloreada = <code>true</code>. Pulsa una celda para inspeccionarla.</span></div>
+      <div class="matrix-wrap scroll"><table class="matrix"></table></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Alterna la matriz entre == y ===. La matriz de === es solo la diagonal (menos NaN y los objetos): predecible.</li>
+      <li>Pulsa <code>null</code> vs <code>0</code>, <code>""</code> vs <code>0</code>, <code>[]</code> vs <code>false</code> para mostrar los casos raros.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="Operadores lógicos">
+  <span class="kicker">03 · Operadores</span>
+  <h2>Operadores lógicos y cortocircuito</h2>
+  <div class="cols">
+    <div>
+      <table class="grid">
+        <thead><tr><th>Op</th><th>Devuelve</th></tr></thead>
+        <tbody>
+          <tr><td><code>a &amp;&amp; b</code></td><td>el primer valor <b>falsy</b>, o el último</td></tr>
+          <tr><td><code>a || b</code></td><td>el primer valor <b>truthy</b>, o el último</td></tr>
+          <tr><td><code>!a</code></td><td>el booleano opuesto</td></tr>
+          <tr><td><code>!!a</code></td><td>convierte a booleano</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">Los operadores lógicos devuelven uno de los <b>valores originales</b>, no necesariamente <code>true</code>/<code>false</code>. Y hacen <b>cortocircuito</b>: el lado derecho solo se evalúa si hace falta.</div>
+    </div>
+    <div>
+<textarea class="code" data-name="logicos.js">
+console.log(true && "hola");       // "hola"
+console.log(0 && "hola");          // 0
+console.log("" || "por defecto");  // "por defecto"
+console.log("Ana" || "por defecto"); // "Ana"
+console.log(!"texto", !!"texto", !!0);
+
+// Cortocircuito: el lado derecho solo se ejecuta si hace falta
+const user = null;
+user && console.log("nunca se ejecuta");
+
+const isLoggedIn = true;
+isLoggedIn && console.log("¡Bienvenido de nuevo!");
+
+// Valor por defecto clásico (pero mira ?? en las siguientes diapositivas)
+function greet(name) {
+  name = name || "desconocido";
+  return "Hola " + name;
+}
+console.log(greet(), greet("Luis"));
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>El patrón <code>cond &amp;&amp; hacerAlgo()</code> es muy común en React (renderizado condicional).</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="¿Truthy o falsy?">
+  <span class="kicker">03 · Operadores</span>
+  <h2>¿Truthy o falsy?</h2>
+  <div class="cols even">
+    <div>
+      <p>En un contexto booleano (<code>if</code>, <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>) todo valor se convierte en <code>true</code> o <code>false</code>. Hay exactamente <b>8 valores falsy</b>:</p>
+      <div class="falsy-list"><code>false</code><code>0</code><code>-0</code><code>0n</code><code>""</code><code>null</code><code>undefined</code><code>NaN</code></div>
+      <p style="margin-top:18px">Todo lo demás es <b>truthy</b>, incluidos <code>"0"</code>, <code>"false"</code>, <code>" "</code>, <code>[]</code> y <code>{}</code>.</p>
+      <div class="callout warn">Cuidado con <code>if (items.length)</code> vs <code>if (items)</code>: ¡un array vacío es truthy!</div>
+    </div>
+    <div class="widget" data-widget="truthy">
+      <h3>Probador de truthiness</h3>
+      <div class="row"><input class="expr truthy-input" value="[]" spellcheck="false" aria-label="Expresión a probar"><button class="btn primary truthy-run">Probar</button></div>
+      <div class="truth-badge truthy">TRUTHY</div>
+      <div class="truthy-detail muted small" style="font-family:var(--code-font)"></div>
+      <p class="small muted" style="margin:14px 0 8px">Prueba estos:</p>
+      <div class="row truthy-presets"></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Deja que el público elija valores: "0", " ", [], {}, NaN… El array vacío y "0" suelen sorprender.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="Operadores modernos">
+  <span class="kicker">03 · Operadores</span>
+  <h2>Operadores modernos: <code>?:</code> <code>??</code> <code>?.</code> <code>...</code></h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><b>Ternario</b> <code>cond ? a : b</code>: la versión en <i>expresión</i> de if/else.</li>
+        <li><b>Fusión de nulos</b> <code>a ?? b</code>: usa el valor alternativo <b>solo</b> con <code>null</code>/<code>undefined</code> (conserva <code>0</code>, <code>""</code>, <code>false</code>).</li>
+        <li><b>Encadenamiento opcional</b> <code>a?.b</code>, <code>a?.[k]</code>, <code>fn?.()</code>: se detiene y devuelve <code>undefined</code> en lugar de fallar.</li>
+        <li><b>Asignación lógica</b> <code>??=</code>, <code>||=</code>, <code>&amp;&amp;=</code>.</li>
+        <li><b>Spread</b> <code>...arr</code> expande un iterable u objeto en su lugar.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="modernos.js">
+const age = 20;
+const status = age >= 18 ? "adulto" : "menor";  // ternario
+console.log(status);
+
+// ?? solo usa el alternativo con null / undefined (a diferencia de ||)
+const count = 0;
+console.log(count || 10);   // 10  😬 perdimos el 0
+console.log(count ?? 10);   // 0   ✅
+
+// ?. encadenamiento opcional
+const user = { profile: { city: "Medellín" } };
+console.log(user.profile?.city);
+console.log(user.settings?.theme);   // undefined, sin fallar
+console.log(user.getName?.());       // llamada segura a un método
+
+// Asignación lógica
+const config = {};
+config.theme ??= "oscuro";
+console.log(config);
+
+// Spread
+const nums = [5, 1, 8];
+console.log(Math.max(...nums), [...nums, 4]);
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Quita el <code>?.</code> de <code>user.settings?.theme</code> → TypeError: Cannot read properties of undefined.</li>
+      <li><code>??</code> es el operador correcto para valores por defecto de números, booleanos y strings que pueden ser legítimamente 0/false/"".</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Operadores" data-title="Laboratorio de operadores">
+  <span class="kicker">03 · Operadores</span>
+  <h2>Laboratorio de operadores 🧪</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>Precedencia (de mayor a menor)</h3>
+      <ol class="prec">
+        <li><code>( … )</code><span>agrupación</span></li>
+        <li><code>a.b</code> <code>a?.b</code> <code>f()</code><span>acceso / llamada</span></li>
+        <li><code>!</code> <code>typeof</code> <code>+a</code> <code>++</code><span>unarios</span></li>
+        <li><code>**</code><span>potencia</span></li>
+        <li><code>*</code> <code>/</code> <code>%</code><span>multiplicativos</span></li>
+        <li><code>+</code> <code>-</code><span>aditivos</span></li>
+        <li><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>instanceof</code><span>relacionales</span></li>
+        <li><code>==</code> <code>===</code> <code>!==</code><span>igualdad</span></li>
+        <li><code>&amp;&amp;</code><span>AND lógico</span></li>
+        <li><code>||</code> <code>??</code><span>OR lógico / nulos</span></li>
+        <li><code>? :</code><span>ternario</span></li>
+        <li><code>=</code> <code>+=</code> <code>??=</code><span>asignación</span></li>
+      </ol>
+      <p class="small muted" style="margin-bottom:0">Si tienes dudas, añade paréntesis: tu equipo te lo agradecerá.</p>
+    </div>
+    <div class="widget" data-widget="lab">
+      <h3>Combina dos valores cualesquiera</h3>
+      <div class="lab-row">
+        <input class="expr lab-a" value='"5"' spellcheck="false" aria-label="Operando izquierdo">
+        <select class="lab-op" aria-label="Operador">
+          <option>+</option><option>-</option><option>*</option><option>/</option><option>%</option><option>**</option>
+          <option>==</option><option>===</option><option>!=</option><option>!==</option><option>&lt;</option><option>&gt;</option><option>&lt;=</option><option>&gt;=</option>
+          <option>&amp;&amp;</option><option>||</option><option>??</option>
+        </select>
+        <input class="expr lab-b" value="3" spellcheck="false" aria-label="Operando derecho">
+      </div>
+      <div class="lab-out">
+        <div class="expr-line"></div>
+        <div class="val"></div>
+        <div class="type"></div>
+      </div>
+      <div class="presets row"></div>
+      <p class="small muted" style="margin-bottom:0">Cualquier expresión de JavaScript sirve como operando, p. ej. <code>[1, 2]</code>, <code>{}</code>, <code>2 + 3 * 4</code>, <code>"abc".length</code>.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Usa los ejemplos predefinidos y luego acepta propuestas del público.</li>
+      <li>Demo de precedencia: <code>2 + 3 * 4 ** 2</code> = 50.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     04 · CONTROL DE FLUJO
+     ===================================================================== -->
+<section class="slide divider" data-section="Control de flujo" data-title="Sección: Control de flujo">
+  <div class="big-num">04</div>
+  <h1>Control de flujo</h1>
+  <div class="topics"><span class="chip">if / else</span><span class="chip">switch</span><span class="chip">for</span><span class="chip">while</span><span class="chip">for…of</span><span class="chip">for…in</span><span class="chip">break / continue</span></div>
+</section>
+
+<section class="slide" data-section="Control de flujo" data-title="Condicionales">
+  <span class="kicker">04 · Control de flujo</span>
+  <h2>Condicionales: <code>if</code> y <code>switch</code></h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><code>if / else if / else</code> evalúa las condiciones de arriba abajo; gana la primera truthy.</li>
+        <li><code>switch</code> compara con <b><code>===</code></b> contra cada <code>case</code>.</li>
+        <li>Sin <code>break</code>, la ejecución <b>continúa</b> al siguiente caso (fall-through): útil para agrupar, peligroso por accidente.</li>
+        <li>Para elegir un valor simple, un ternario o un objeto de búsqueda suelen ser más limpios.</li>
+      </ul>
+      <p class="small muted">Pruébalo: cambia <code>hour</code> y <code>day</code>, o quita un <code>break</code>.</p>
+    </div>
+    <div>
+<textarea class="code" data-name="condicionales.js">
+const hour = 14;
+
+if (hour < 12) {
+  console.log("Buenos días ☀️");
+} else if (hour < 18) {
+  console.log("Buenas tardes 🌤️");
+} else {
+  console.log("Buenas noches 🌙");
+}
+
+const day = "sab";
+switch (day) {
+  case "sab":
+  case "dom":
+    console.log("¡Fin de semana! 🎉");
+    break;               // sin break → continúa al siguiente caso
+  case "lun":
+    console.log("De vuelta al trabajo 💻");
+    break;
+  default:
+    console.log("Día laboral normal");
+}
+
+// Alternativa con un objeto de búsqueda
+const emoji = { sab: "🎉", dom: "😴", lun: "☕" }[day] ?? "📅";
+console.log(emoji);
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Quita el primer <code>break</code> para mostrar el fall-through imprimiendo dos líneas.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Control de flujo" data-title="Bucles">
+  <span class="kicker">04 · Control de flujo</span>
+  <h2>Bucles</h2>
+  <div class="cols">
+    <div>
+      <table class="grid">
+        <thead><tr><th>Bucle</th><th>Úsalo para</th></tr></thead>
+        <tbody>
+          <tr><td><code>for (init; cond; paso)</code></td><td>contar</td></tr>
+          <tr><td><code>while (cond)</code></td><td>número de iteraciones desconocido</td></tr>
+          <tr><td><code>do { } while (cond)</code></td><td>ejecutar al menos una vez</td></tr>
+          <tr><td><code>for (const v of iterable)</code></td><td><b>valores</b> de arrays, strings, Maps…</td></tr>
+          <tr><td><code>for (const k in objeto)</code></td><td><b>claves</b> de un objeto</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn">Usa <code>for…of</code> para arrays, no <code>for…in</code> (que da los índices como strings).</div>
+      <p class="small muted">Prueba <code>while (true) {}</code>: el entorno aislado lo detiene a los 4 segundos.</p>
+    </div>
+    <div>
+<textarea class="code" data-name="bucles.js">
+for (let i = 1; i <= 3; i++) {
+  console.log("for:", i);
+}
+
+let n = 3;
+while (n > 0) {
+  console.log("while:", n);
+  n--;
+}
+
+const fruits = ["🍎", "🍌", "🍇"];
+for (const fruit of fruits) {         // valores
+  console.log("of:", fruit);
+}
+
+const person = { name: "Ana", role: "dev" };
+for (const key in person) {           // claves
+  console.log("in:", key, "=", person[key]);
+}
+
+for (let i = 0; i < 10; i++) {
+  if (i === 2) continue;   // salta esta iteración
+  if (i === 5) break;      // sale del bucle
+  console.log("i =", i);
+}
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Demuestra la protección contra bucles infinitos: buen momento para explicar que JS tiene un solo hilo y un bucle así congelaría una pestaña real del navegador.</li>
+      <li>Anticipa: los métodos de array (<code>map</code>, <code>filter</code>) reemplazan la mayoría de los bucles en el código moderno.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     05 · FUNCIONES
+     ===================================================================== -->
+<section class="slide divider" data-section="Funciones" data-title="Sección: Funciones">
+  <div class="big-num">05</div>
+  <h1>Funciones</h1>
+  <div class="topics"><span class="chip">declaraciones</span><span class="chip">expresiones</span><span class="chip">flechas</span><span class="chip">parámetros</span><span class="chip">alcance</span><span class="chip">closures</span><span class="chip">orden superior</span><span class="chip">this</span></div>
+</section>
+
+<section class="slide three-way" data-section="Funciones" data-title="Tres formas de definir una función">
+  <span class="kicker">05 · Funciones</span>
+  <h2>Tres formas de definir una función</h2>
+  <div class="cols three">
+    <div class="card">
+      <h3>Declaración</h3>
+<textarea class="snippet">
+function add(a, b) {
+  return a + b;
+}
+</textarea>
+      <ul class="points"><li>Elevada: se puede llamar antes de su línea</li><li>Tiene su propio <code>this</code></li></ul>
+    </div>
+    <div class="card">
+      <h3>Expresión</h3>
+<textarea class="snippet">
+const add = function (a, b) {
+  return a + b;
+};
+</textarea>
+      <ul class="points"><li>No elevada (TDZ)</li><li>Un valor asignado a una variable</li></ul>
+    </div>
+    <div class="card">
+      <h3>Flecha <span class="muted small">ES2015</span></h3>
+<textarea class="snippet">
+const add = (a, b) => a + b;
+</textarea>
+      <ul class="points"><li>Concisa, retorno implícito</li><li>Sin <code>this</code> / <code>arguments</code> propios</li></ul>
+    </div>
+  </div>
+<textarea class="code" data-name="funciones.js" style="--h:32vh">
+function add(a, b) { return a + b; }               // declaración
+const subtract = function (a, b) { return a - b; }; // expresión
+const multiply = (a, b) => a * b;                   // flecha, retorno implícito
+const square = x => x * x;                          // un parámetro: sin paréntesis
+const greet = () => "¡Hola!";                       // sin parámetros
+const makeUser = name => ({ name, createdAt: 2026 }); // ¿devolver un objeto? envuélvelo en ( )
+
+console.log(add(2, 3), subtract(10, 4), multiply(3, 4));
+console.log(square(9), greet(), makeUser("Ana"));
+console.log(typeof add, add.name, add.length);      // las funciones son objetos con propiedades
+</textarea>
+  <aside class="notes">
+    <ul>
+      <li>Las tres producen el mismo tipo de valor: un objeto función.</li>
+      <li>Error típico: <code>() => { name }</code> es un bloque, no un objeto. Envuelve los objetos literales en paréntesis.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Funciones" data-title="Parámetros y retorno">
+  <span class="kicker">05 · Funciones</span>
+  <h2>Parámetros y valores de retorno</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><b>Parámetros por defecto:</b> <code>function f(x = 1)</code></li>
+        <li><b>Parámetros rest:</b> <code>function f(...args)</code> agrupa los argumentos extra en un array.</li>
+        <li><b>Parámetros desestructurados:</b> <code>function f({ name, age })</code>, ideales para objetos de “opciones”.</li>
+        <li>Los argumentos que faltan son <code>undefined</code>; los que sobran se ignoran, <b>sin error</b>.</li>
+        <li>Una función sin <code>return</code> devuelve <code>undefined</code>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="parametros.js">
+// Parámetros por defecto
+function greet(name = "desconocido", greeting = "Hola") {
+  return `${greeting}, ${name}!`;
+}
+console.log(greet());
+console.log(greet("Ana"));
+console.log(greet("Luis", "Buenas"));
+
+// Parámetros rest
+function sum(...numbers) {
+  let total = 0;
+  for (const n of numbers) total += n;
+  return total;
+}
+console.log(sum(1, 2, 3, 4));
+
+// Faltan args → undefined, sobran args → se ignoran
+function show(a, b) { console.log(a, b); }
+show(1);
+show(1, 2, 3);
+
+// Sin return → undefined
+function noReturn() { const x = 1; }
+console.log(noReturn());
+
+// Parámetro de "opciones" desestructurado
+function createUser({ name, age = 18, role = "dev" }) {
+  return `${name} (${age}) – ${role}`;
+}
+console.log(createUser({ name: "Ada", role: "líder" }));
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Los objetos de opciones hacen legibles las llamadas y vuelven irrelevante el orden de los argumentos.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Funciones" data-title="Alcance y closures" data-slug="closures">
+  <span class="kicker">05 · Funciones</span>
+  <h2>Alcance y closures</h2>
+  <div class="cols">
+    <div>
+      <p>El alcance es <b>léxico</b>: una función ve las variables del lugar donde fue <i>escrita</i>, buscando hacia afuera.</p>
+      <div class="scope s-global"><span class="label">Alcance global</span><code>const app = "demo"</code>
+        <div class="scope s-fn"><span class="label">function createCounter()</span><code>let count = 0</code>
+          <div class="scope s-inner"><span class="label">() =&gt; ++count</span><span class="muted"> ve <code>count</code> y <code>app</code></span></div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px">Un <b>closure</b> (clausura) es una función que <b>recuerda</b> las variables del alcance donde fue creada, incluso después de que la función externa haya terminado.</div>
+      <a class="exercise-link" href="ejercicios/funciones.html#quiz-closures"><span class="i">🪤</span><span class="t"><b>Ejercicio</b>Quiz: la trampa clásica de los closures</span><span class="go">→</span></a>
+    </div>
+    <div>
+<textarea class="code" data-name="closures.js">
+function createCounter() {
+  let count = 0;                // estado privado
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    value: () => count,
+  };
+}
+
+const counterA = createCounter();
+const counterB = createCounter();
+counterA.increment();
+counterA.increment();
+counterB.increment();
+
+console.log("A:", counterA.value());  // 2
+console.log("B:", counterB.value());  // 1
+console.log(counterA.count);          // undefined: ¡es privado!
+
+// Fábrica de funciones
+const multiplier = factor => n => n * factor;
+const double = multiplier(2);
+const triple = multiplier(3);
+console.log(double(5), triple(5));
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Cada llamada a <code>createCounter</code> crea un <code>count</code> nuevo e independiente.</li>
+      <li>Los closures hacen posible: privacidad de datos, fábricas, manejadores de eventos, hooks de React, memoización.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Funciones" data-title="Funciones de orden superior">
+  <span class="kicker">05 · Funciones</span>
+  <h2>Las funciones son valores</h2>
+  <div class="cols">
+    <div>
+      <p>Las funciones son <b>ciudadanas de primera clase</b>: puedes guardarlas en variables, pasarlas como argumentos y devolverlas desde otras funciones.</p>
+      <ul class="points">
+        <li><b>Función de orden superior:</b> recibe y/o devuelve una función (<code>map</code>, <code>filter</code>, <code>setTimeout</code>, <code>addEventListener</code>…).</li>
+        <li><b>Callback:</b> una función que se pasa para ser llamada después.</li>
+        <li><b>Composición:</b> construir comportamientos complejos a partir de funciones pequeñas.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="orden-superior.js">
+// Guardar funciones en variables y arrays
+const sayHi = name => console.log(`Hola ${name}`);
+const actions = [sayHi, name => console.log(`Chao ${name}`)];
+actions.forEach(fn => fn("Ana"));
+
+// Recibir una función como argumento
+function repeat(times, action) {
+  for (let i = 0; i < times; i++) action(i);
+}
+repeat(3, i => console.log("Iteración", i));
+
+// Patrón callback
+function fetchData(onSuccess) {
+  const data = { id: 1, title: "JS es genial" };
+  onSuccess(data);
+}
+fetchData(result => console.log("Recibido:", result));
+
+// Devolver una función: composición
+const compose = (f, g) => x => f(g(x));
+const addOne = x => x + 1;
+const double = x => x * 2;
+console.log(compose(addOne, double)(5));  // addOne(double(5))
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Esta es la base de los métodos de array (siguiente bloque) y de los callbacks asíncronos.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Funciones" data-title="this y funciones flecha" data-slug="this">
+  <span class="kicker">05 · Funciones</span>
+  <h2><code>this</code> y funciones flecha</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>En una función normal, <code>this</code> depende de <b>cómo se llama</b>: <code>obj.method()</code> → <code>this === obj</code>.</li>
+        <li>Si separas el método (<code>const f = obj.method</code>), <code>this</code> se <b>pierde</b>.</li>
+        <li>Las <b>funciones flecha</b> no tienen <code>this</code> propio: usan el del código que las rodea. Perfectas para callbacks dentro de métodos.</li>
+        <li><code>fn.bind(obj)</code> crea una copia con <code>this</code> fijo.</li>
+      </ul>
+      <div class="callout warn">No uses funciones flecha como métodos de un objeto cuando necesites <code>this</code>.</div>
+      <a class="exercise-link" href="ejercicios/funciones.html#reto-palindromo"><span class="i">🏆</span><span class="t"><b>Reto de la sección</b><code>isPalindrome(text)</code></span><span class="go">→</span></a>
+    </div>
+    <div>
+<textarea class="code" data-name="this.js">
+const team = {
+  title: "Globant JS",
+  members: ["Ana", "Luis"],
+
+  // Método normal: `this` = el objeto antes del punto
+  describe() {
+    return `Equipo ${this.title}`;
+  },
+
+  // El callback flecha hereda `this` de listMembers ✅
+  listMembers() {
+    this.members.forEach(m => console.log(`${m} está en ${this.title}`));
+  },
+
+  // Flecha como método: no tiene `this` propio ❌
+  broken: () => `Equipo ${this?.title}`,
+};
+
+console.log(team.describe());
+team.listMembers();
+console.log(team.broken());
+
+const detached = team.describe;
+console.log(detached());              // se pierde `this`
+const bound = team.describe.bind(team);
+console.log(bound());                 // corregido con bind
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Mantenlo ligero: <code>this</code> merece su propia sesión. La idea clave: funciones normales para métodos, flechas para callbacks.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     06 · OBJETOS Y ARRAYS
+     ===================================================================== -->
+<section class="slide divider" data-section="Objetos y arrays" data-title="Sección: Objetos y arrays">
+  <div class="big-num">06</div>
+  <h1>Objetos y arrays</h1>
+  <div class="topics"><span class="chip">literales</span><span class="chip">punto vs. corchetes</span><span class="chip">desestructuración</span><span class="chip">spread</span><span class="chip">map</span><span class="chip">filter</span><span class="chip">reduce</span></div>
+</section>
+
+<section class="slide" data-section="Objetos y arrays" data-title="Objetos">
+  <span class="kicker">06 · Objetos</span>
+  <h2>Objetos</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Colecciones de pares <b>clave → valor</b>, creadas con <code>{ }</code>.</li>
+        <li>Notación de <b>punto</b> <code>obj.key</code> o de <b>corchetes</b> <code>obj["some-key"]</code> / <code>obj[variable]</code>.</li>
+        <li>Los métodos son simplemente propiedades que contienen funciones.</li>
+        <li>La <b>desestructuración</b> extrae propiedades a variables, con renombrado y valores por defecto.</li>
+        <li><b>Spread</b> <code>{ ...a, ...b }</code> copia / combina (las claves posteriores ganan).</li>
+        <li><code>Object.keys</code>, <code>Object.values</code>, <code>Object.entries</code>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="objetos.js">
+const dev = {
+  name: "Ana",
+  skills: ["JS", "CSS"],
+  "favorite-food": "arepa",          // comillas para claves especiales
+  greet() {                           // método abreviado
+    return `Hola, soy ${this.name}`;
+  },
+};
+
+console.log(dev.name);               // notación de punto
+console.log(dev["favorite-food"]);   // notación de corchetes
+const key = "skills";
+console.log(dev[key]);               // clave dinámica
+console.log(dev.greet());
+
+dev.level = "senior";                // agregar una propiedad
+delete dev["favorite-food"];         // eliminar una
+console.log(Object.keys(dev));
+
+// Desestructuración con renombrado + valor por defecto
+const { name, level: seniority, country = "CO" } = dev;
+console.log(name, seniority, country);
+
+// Propiedad abreviada + combinación con spread
+const city = "Bogotá";
+const profile = { ...dev, city, name: "Ana María" };
+console.log(profile);
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>El orden del spread importa: las propiedades escritas después del spread sobrescriben las copiadas.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Objetos y arrays" data-title="Métodos de array" data-slug="metodos-array">
+  <span class="kicker">06 · Arrays</span>
+  <h2>Los arrays y sus superpoderes</h2>
+  <div class="cols">
+    <div>
+      <div class="card emoji-flow">
+        <div><span class="m">[🥔, 🌽, 🐔].map(cook)</span> → [🍟, 🍿, 🍗]</div>
+        <div><span class="m">[🍟, 🍿, 🍗].filter(isVeggie)</span> → [🍟, 🍿]</div>
+        <div><span class="m">[🍟, 🍿].reduce(eat)</span> → 😋</div>
+      </div>
+      <ul class="points" style="margin-top:14px">
+        <li><code>map</code> transforma cada elemento → array nuevo, misma longitud.</li>
+        <li><code>filter</code> conserva los elementos que pasan una prueba.</li>
+        <li><code>reduce</code> reduce el array a un único valor.</li>
+        <li><code>find</code>, <code>some</code>, <code>every</code>, <code>includes</code>, <code>indexOf</code>.</li>
+        <li><code>push</code>, <code>pop</code>, <code>sort</code>, <code>splice</code> <b>modifican</b> el array original.</li>
+      </ul>
+      <a class="exercise-link" href="ejercicios/objetos-y-arrays.html#reto-adultos"><span class="i">🏆</span><span class="t"><b>Reto de la sección</b><code>getAdultNames(people)</code></span><span class="go">→</span></a>
+    </div>
+    <div>
+<textarea class="code" data-name="arrays.js" style="--h:52vh">
+const products = [
+  { name: "Portátil", price: 1200, inStock: true },
+  { name: "Mouse", price: 25, inStock: false },
+  { name: "Monitor", price: 300, inStock: true },
+  { name: "Teclado", price: 80, inStock: true },
+];
+
+console.log("map:", products.map(p => p.name));
+console.log("filter:", products.filter(p => p.inStock).length, "en stock");
+console.log("reduce:", products.reduce((sum, p) => sum + p.price, 0));
+console.log("find:", products.find(p => p.price < 50));
+console.log("some:", products.some(p => p.price > 1000));
+console.log("every:", products.every(p => p.inStock));
+
+// Encadenamiento
+const affordable = products
+  .filter(p => p.inStock && p.price < 500)
+  .map(p => `${p.name}: $${p.price}`);
+console.log(affordable);
+
+// Mutable vs. no mutable
+const nums = [3, 1, 2];
+nums.push(4);
+const sorted = [...nums].sort((a, b) => b - a);  // ¡primero copia!
+console.log(nums, sorted);
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Pregunta: ¿cómo obtendrías el precio total de los productos en stock? (filter + reduce). Escríbelo en vivo.</li>
+      <li>Advierte: <code>sort()</code> sin argumentos compara como strings: <code>[10, 9, 1].sort()</code> → <code>[1, 10, 9]</code>.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     07 · ERRORES Y ASINCRONÍA
+     ===================================================================== -->
+<section class="slide divider" data-section="Errores y asincronía" data-title="Sección: Errores y asincronía">
+  <div class="big-num">07</div>
+  <h1>Errores y asincronía</h1>
+  <div class="topics"><span class="chip">try / catch</span><span class="chip">throw</span><span class="chip">errores propios</span><span class="chip">event loop</span><span class="chip">Promise</span><span class="chip">async / await</span></div>
+</section>
+
+<section class="slide" data-section="Errores y asincronía" data-title="Manejo de errores">
+  <span class="kicker">07 · Errores</span>
+  <h2>Manejo de errores</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><code>throw</code> lanza cualquier valor, pero es mejor usar objetos <code>Error</code> (incluyen el stack trace).</li>
+        <li><code>try</code> ejecuta el código, <code>catch</code> maneja el error, <code>finally</code> se ejecuta <b>siempre</b> (limpieza).</li>
+        <li>Tipos incorporados: <code>Error</code>, <code>TypeError</code>, <code>RangeError</code>, <code>ReferenceError</code>, <code>SyntaxError</code>.</li>
+        <li>Extiende <code>Error</code> para errores propios de tu dominio.</li>
+        <li>Un error no capturado detiene el script actual.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="errores.js">
+function divide(a, b) {
+  if (typeof a !== "number" || typeof b !== "number") {
+    throw new TypeError("Ambos argumentos deben ser números");
+  }
+  if (b === 0) {
+    throw new RangeError("No se puede dividir entre cero");
+  }
+  return a / b;
+}
+
+try {
+  console.log(divide(10, 2));
+  console.log(divide(1, 0));
+  console.log("Esta línea nunca se ejecuta");
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+} finally {
+  console.log("finally siempre se ejecuta 🧹");
+}
+
+class ValidationError extends Error {
+  constructor(field) {
+    super(`Campo inválido: ${field}`);
+    this.name = "ValidationError";
+  }
+}
+
+try {
+  throw new ValidationError("email");
+} catch (e) {
+  console.log(e instanceof ValidationError, e.message);
+}
+
+// Descomenta para ver un error no capturado:
+// null.length;
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Cambia <code>divide(1, 0)</code> por <code>divide("1", 2)</code> para activar la rama del TypeError.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Errores y asincronía" data-title="El event loop" data-slug="event-loop">
+  <span class="kicker">07 · Asincronía</span>
+  <h2>El event loop</h2>
+  <div style="max-width:900px">
+    <div>
+      <p>JavaScript hace <b>una cosa a la vez</b>. El trabajo lento (temporizadores, red, archivos) se delega y su callback queda en cola para después:</p>
+      <ol>
+        <li>Primero se ejecuta todo el <b>código síncrono</b>.</li>
+        <li>Luego las <b>microtareas</b>: callbacks de Promesas (<code>then</code>, <code>await</code>).</li>
+        <li>Luego las <b>macrotareas</b>: <code>setTimeout</code>, eventos, E/S.</li>
+      </ol>
+      <div class="callout"><code>setTimeout(fn, 0)</code> no significa “ahora”, sino “lo antes posible <b>después</b> del trabajo actual”.</div>
+      <a class="exercise-link" href="ejercicios/asincronia.html#quiz-event-loop"><span class="i">⏱️</span><span class="t"><b>Ejercicio</b>Quiz: ¿en qué orden se imprime?</span><span class="go">→</span></a>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Explica el orden aquí y luego abre el ejercicio para votar y verificarlo en vivo.</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="slide" data-section="Errores y asincronía" data-title="Promesas y async/await">
+  <span class="kicker">07 · Asincronía</span>
+  <h2>Promesas y <code>async</code> / <code>await</code></h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Una <b>Promesa</b> representa un valor que estará disponible más tarde: <i>pending</i> → <i>fulfilled</i> o <i>rejected</i>.</li>
+        <li>Se consume con <code>.then()</code> / <code>.catch()</code>…</li>
+        <li>…o con <code>await</code> dentro de una función <code>async</code>: se lee como código síncrono y usa <code>try / catch</code> normal.</li>
+        <li><code>Promise.all([...])</code> ejecuta varias en paralelo.</li>
+      </ul>
+      <div class="callout">Ejemplo real: <code>const res = await fetch(url); const data = await res.json();</code></div>
+    </div>
+    <div>
+<textarea class="code" data-name="async.js">
+// Llamada a una API simulada
+function fetchUser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (id > 0) resolve({ id, name: "Ana" });
+      else reject(new Error(`Usuario ${id} no encontrado`));
+    }, 800);
+  });
+}
+
+// Encadenamiento de Promesas
+fetchUser(1)
+  .then(user => console.log("then:", user))
+  .catch(err => console.error(err.message));
+
+// async / await
+async function main() {
+  try {
+    const user = await fetchUser(2);
+    console.log("await:", user);
+    await fetchUser(-1);
+  } catch (err) {
+    console.error("capturado:", err.message);
+  }
+}
+
+main();
+console.log("¡Yo me ejecuto primero! ⚡");
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Fíjate en los tiempos: “¡Yo me ejecuto primero!” aparece de inmediato; lo demás tras ~0,8 s y ~1,6 s.</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- =====================================================================
+     08 · CIERRE — enlaces a las páginas independientes
+     ===================================================================== -->
+<section class="slide" data-section="Cierre" data-title="Cierre: hoja de referencia, quiz y preguntas" data-hide-badge>
+  <div class="logo-plate small"><img src="assets/logo-chicas-programadoras.png" alt="Chicas Programadoras Club"></div>
+  <span class="kicker" style="display:block">08 · Cierre</span>
+  <h2>¡Eso es todo! 🎬</h2>
+  <p class="lead" style="margin-top:-6px">Tres paradas más antes de terminar. Cada una se abre en su propia página; usa el enlace de regreso para volver aquí.</p>
+  <div class="link-grid">
+    <a class="link-card" href="cheatsheet.html">
+      <span class="icon">📋</span>
+      <span class="t">Hoja de referencia</span>
+      <span class="s">Un resumen en una página de todos los conceptos de hoy. Imprimible.</span>
+      <span class="go">Abrir →</span>
+    </a>
+    <a class="link-card" href="quiz.html">
+      <span class="icon">🧠</span>
+      <span class="t">Quiz final</span>
+      <span class="s">Seis preguntas con puntaje en vivo. ¡Voten en grupo!</span>
+      <span class="go">Empezar quiz →</span>
+    </a>
+    <a class="link-card" href="qa.html">
+      <span class="icon">🙋</span>
+      <span class="t">Preguntas y recursos</span>
+      <span class="s">Sus preguntas, dónde seguir aprendiendo y qué estudiar después.</span>
+      <span class="go">Abrir →</span>
+    </a>
+  </div>
+  <p class="hint">¡Gracias por participar! Toda la presentación funciona sin conexión; compártanla libremente.</p>
+  <aside class="notes">
+    <ul>
+      <li>Orden sugerido: hoja de referencia (1 min) → quiz con votación en grupo (2 min) → preguntas.</li>
+      <li>Cada página tiene un enlace “Volver a la presentación” que regresa a esta diapositiva.</li>
+    </ul>
+  </aside>
+</section>
+
+</main>
+
+<img class="corner-badge" src="assets/badge-club.png" alt="">
+
+<!-- ---------- Controles: barra, menú, notas ---------- -->
+<nav class="bar" aria-label="Navegación de diapositivas">
+  <div class="progress" id="progress"></div>
+  <div class="section-name" id="section-name"></div>
+  <button class="icon-btn" id="prev" aria-label="Diapositiva anterior" title="Anterior (←)">◀</button>
+  <div class="counter" id="counter"></div>
+  <button class="icon-btn" id="next" aria-label="Diapositiva siguiente" title="Siguiente (→)">▶</button>
+  <div class="right">
+    <button class="icon-btn" id="btn-notes" aria-label="Notas del presentador" title="Notas del presentador (N)">🗒</button>
+    <button class="icon-btn" id="btn-menu" aria-label="Menú de diapositivas" title="Menú (M)">☰</button>
+    <button class="icon-btn" id="btn-fs" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
+  </div>
+</nav>
+<div class="menu" id="menu" aria-label="Todas las diapositivas"></div>
+<div class="notes-panel" id="notes"><div class="label">Notas del presentador</div><div id="notes-body"></div></div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

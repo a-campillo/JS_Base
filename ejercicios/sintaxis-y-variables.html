@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios: Sintaxis y variables — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Ejercicios">
+    <a class="brand" href="../index.html#var-let-const"><img src="../assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab current" href="sintaxis-y-variables.html" aria-current="page">01 · Variables</a>
+    <a class="tab" href="operadores.html">03 · Operadores</a>
+    <a class="tab" href="funciones.html">05 · Funciones</a>
+    <a class="tab" href="objetos-y-arrays.html">06 · Arrays</a>
+    <a class="tab" href="asincronia.html">07 · Asincronía</a>
+  </nav>
+
+  <span class="kicker">Ejercicios · 01 Sintaxis y variables</span>
+  <h1>Ejercicios: Sintaxis y variables</h1>
+
+  <section class="exercise" id="quiz-hoisting">
+    <div class="exercise-head">
+      <h2>Quiz: hoisting 🤔</h2>
+      <a class="back-slide" href="../index.html#var-let-const">← Volver a la diapositiva</a>
+    </div>
+  <div class="cols even">
+    <div>
+      <div class="quiz" data-answer="1">
+        <p class="q">¿Qué imprime esto?</p>
+<textarea class="snippet">
+console.log(x);
+var x = 5;
+</textarea>
+        <div class="opts"><button>5</button><button>undefined</button><button>ReferenceError</button><button>null</button></div>
+        <p class="explain" hidden>Las declaraciones con <code>var</code> se <b>elevan</b> (hoisting) al inicio de su función y se inicializan con <code>undefined</code>. La asignación se queda donde está.</p>
+      </div>
+      <div class="quiz" data-answer="2">
+        <p class="q">¿Y esto?</p>
+<textarea class="snippet">
+console.log(y);
+let y = 5;
+</textarea>
+        <div class="opts"><button>5</button><button>undefined</button><button>ReferenceError</button><button>null</button></div>
+        <p class="explain" hidden><code>let</code> y <code>const</code> también se elevan, pero quedan sin inicializar en la <b>Zona Muerta Temporal</b> (TDZ) hasta que se ejecuta su línea.</p>
+      </div>
+    </div>
+    <div>
+<textarea class="code" data-name="hoisting.js">
+console.log(x);       // ?
+var x = 5;
+
+sayHi();              // las declaraciones de función se elevan completas
+function sayHi() {
+  console.log("¡Hola!");
+}
+
+try {
+  console.log(y);     // Zona Muerta Temporal
+  let y = 10;
+} catch (e) {
+  console.log(e.name + ": " + e.message);
+}
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Pide que voten antes de pulsar. Luego verifica con el editor.</li>
+      <li>Hoisting: el motor registra las declaraciones antes de ejecutar el código. La TDZ convierte un bug silencioso en un error ruidoso: otro punto a favor de <code>let</code>.</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

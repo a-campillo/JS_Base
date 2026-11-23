@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios: Operadores — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Ejercicios">
+    <a class="brand" href="../index.html#comparacion"><img src="../assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab" href="sintaxis-y-variables.html">01 · Variables</a>
+    <a class="tab current" href="operadores.html" aria-current="page">03 · Operadores</a>
+    <a class="tab" href="funciones.html">05 · Funciones</a>
+    <a class="tab" href="objetos-y-arrays.html">06 · Arrays</a>
+    <a class="tab" href="asincronia.html">07 · Asincronía</a>
+  </nav>
+
+  <span class="kicker">Ejercicios · 03 Operadores</span>
+  <h1>Ejercicios: Operadores</h1>
+
+  <section class="exercise" id="coercion">
+    <div class="exercise-head">
+      <h2>Coerción de tipos: ¡adivina! 🎯</h2>
+      <a class="back-slide" href="../index.html#comparacion">← Volver a la diapositiva</a>
+    </div>
+  <p class="lead" style="margin-top:-8px">Di tu respuesta en voz alta y luego pulsa la tarjeta. Los resultados los calcula tu navegador en vivo.</p>
+  <div class="widget-reveal">
+    <div class="reveal-grid">
+      <button class="reveal"><code>"5" + 3</code><span class="ans">?</span></button>
+      <button class="reveal"><code>"5" - 3</code><span class="ans">?</span></button>
+      <button class="reveal"><code>"5" * "2"</code><span class="ans">?</span></button>
+      <button class="reveal"><code>true + true</code><span class="ans">?</span></button>
+      <button class="reveal"><code>[] + []</code><span class="ans">?</span></button>
+      <button class="reveal"><code>[] + {}</code><span class="ans">?</span></button>
+      <button class="reveal"><code>null + 1</code><span class="ans">?</span></button>
+      <button class="reveal"><code>undefined + 1</code><span class="ans">?</span></button>
+      <button class="reveal"><code>"10" &lt; "9"</code><span class="ans">?</span></button>
+      <button class="reveal"><code>null &gt;= 0</code><span class="ans">?</span></button>
+      <button class="reveal"><code>0.1 + 0.2 === 0.3</code><span class="ans">?</span></button>
+      <button class="reveal"><code>"b" + "a" + +"a" + "a"</code><span class="ans">?</span></button>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn reveal-all">Mostrar todas</button><button class="btn reveal-reset">Ocultar todas</button></div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li><code>+</code> con un string concatena; <code>- * /</code> convierten a número.</li>
+      <li>Los arrays se convierten a string (<code>[] → ""</code>); los objetos a <code>"[object Object]"</code>.</li>
+      <li><code>null &gt;= 0</code> es true pero <code>null == 0</code> es false: los operadores relacionales convierten null en 0, == no.</li>
+      <li>El de la banana: <code>+"a"</code> es NaN → "baNaNa".</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios: Errores y asincronía — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Ejercicios">
+    <a class="brand" href="../index.html#event-loop"><img src="../assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab" href="sintaxis-y-variables.html">01 · Variables</a>
+    <a class="tab" href="operadores.html">03 · Operadores</a>
+    <a class="tab" href="funciones.html">05 · Funciones</a>
+    <a class="tab" href="objetos-y-arrays.html">06 · Arrays</a>
+    <a class="tab current" href="asincronia.html" aria-current="page">07 · Asincronía</a>
+  </nav>
+
+  <span class="kicker">Ejercicios · 07 Errores y asincronía</span>
+  <h1>Ejercicios: Errores y asincronía</h1>
+
+  <section class="exercise" id="quiz-event-loop">
+    <div class="exercise-head">
+      <h2>Quiz: el event loop ⏱️</h2>
+      <a class="back-slide" href="../index.html#event-loop">← Volver a la diapositiva</a>
+    </div>
+  <div class="cols even">
+    <div>
+      <div class="quiz" data-answer="2">
+        <p class="q">¿En qué orden se imprimen las letras?</p>
+<textarea class="snippet">
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
+</textarea>
+        <div class="opts"><button>A B C D</button><button>A D B C</button><button>A D C B</button><button>A C D B</button></div>
+        <p class="explain" hidden>Primero el código síncrono (<b>A</b>, <b>D</b>), luego la microtarea de la Promesa (<b>C</b>) y después la macrotarea del temporizador (<b>B</b>), aunque tenga 0 ms de espera.</p>
+      </div>
+    </div>
+    <div>
+<textarea class="code" data-name="event-loop.js">
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+console.log("D");
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Primero votación. La mayoría responde A D B C.</li>
+      <li>setTimeout(fn, 0) significa “lo antes posible después del trabajo actual”, no “ahora”.</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

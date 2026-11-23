@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz final — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap" data-quiz-scope>
+  <nav class="page-nav" aria-label="Páginas de la sesión">
+    <a class="brand" href="index.html#end"><img src="assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab" href="cheatsheet.html">📋 Hoja de referencia</a>
+    <a class="tab current" href="quiz.html" aria-current="page">🧠 Quiz final</a>
+    <a class="tab" href="qa.html">🙋 Preguntas</a>
+  </nav>
+
+  <span class="kicker">08 · Cierre</span>
+  <div class="page-head">
+    <h1>Quiz final 🧠</h1>
+    <span class="score">Puntaje: 0 / 6</span>
+    <button class="btn quiz-reset">↺ Reiniciar</button>
+  </div>
+
+  <div class="quiz-set cols even">
+    <div>
+      <div class="quiz" data-answer="2">
+        <p class="q">1. <code>typeof null</code> devuelve…</p>
+        <div class="opts"><button>"null"</button><button>"undefined"</button><button>"object"</button><button>"number"</button></div>
+        <p class="explain" hidden>Un bug histórico que se mantiene por compatibilidad.</p>
+      </div>
+      <div class="quiz" data-answer="1">
+        <p class="q">2. ¿Qué declaración tiene alcance de bloque y no se puede reasignar?</p>
+        <div class="opts"><button>var</button><button>const</button><button>let</button><button>function</button></div>
+        <p class="explain" hidden><code>const</code>, aunque el objeto al que apunta todavía se puede modificar.</p>
+      </div>
+      <div class="quiz" data-answer="0">
+        <p class="q">3. <code>0 ?? 5</code> da como resultado…</p>
+        <div class="opts"><button>0</button><button>5</button><button>true</button><button>undefined</button></div>
+        <p class="explain" hidden><code>??</code> solo usa el valor alternativo con <code>null</code>/<code>undefined</code>. (<code>0 || 5</code> daría <code>5</code>.)</p>
+      </div>
+    </div>
+    <div>
+      <div class="quiz" data-answer="3">
+        <p class="q">4. <code>"2" + 2 * "2"</code> da como resultado…</p>
+        <div class="opts"><button>8</button><button>6</button><button>"222"</button><button>"24"</button></div>
+        <p class="explain" hidden><code>*</code> se evalúa primero y convierte a números: <code>2 * "2" → 4</code>. Luego <code>"2" + 4</code> concatena → <code>"24"</code>.</p>
+      </div>
+      <div class="quiz" data-answer="1">
+        <p class="q">5. <code>[1, 2, 3].map(n =&gt; n * 2)</code> devuelve…</p>
+        <div class="opts"><button>12</button><button>[2, 4, 6]</button><button>[1, 2, 3]</button><button>undefined</button></div>
+        <p class="explain" hidden><code>map</code> devuelve un array nuevo con cada elemento transformado.</p>
+      </div>
+      <div class="quiz" data-answer="2">
+        <p class="q">6. ¿Qué devuelve <code>g()</code> la tercera vez?</p>
+<textarea class="snippet">
+const make = () => { let c = 0; return () => ++c; };
+const g = make();
+g(); g(); g(); // ← ?
+</textarea>
+        <div class="opts"><button>1</button><button>0</button><button>3</button><button>undefined</button></div>
+        <p class="explain" hidden>La función flecha devuelta forma un closure sobre <code>c</code>, así que la cuenta se conserva entre llamadas.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-result callout good" hidden></div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de referencia — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Páginas de la sesión">
+    <a class="brand" href="index.html#end"><img src="assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab current" href="cheatsheet.html" aria-current="page">📋 Hoja de referencia</a>
+    <a class="tab" href="quiz.html">🧠 Quiz final</a>
+    <a class="tab" href="qa.html">🙋 Preguntas</a>
+  </nav>
+
+  <span class="kicker">08 · Cierre</span>
+  <div class="page-head">
+    <h1>Hoja de referencia</h1>
+    <button class="btn no-print" onclick="window.print()">🖨 Imprimir</button>
+  </div>
+
+  <div class="recap">
+    <div class="card"><h3>Variables</h3><ul><li><code>const</code> por defecto</li><li><code>let</code> para reasignar</li><li>evita <code>var</code></li><li>alcance de bloque + TDZ</li></ul></div>
+    <div class="card"><h3>Tipos</h3><ul><li>7 primitivos + object</li><li><code>typeof null</code> → "object"</li><li>primitivos por valor</li><li>objetos por referencia</li></ul></div>
+    <div class="card"><h3>Operadores</h3><ul><li><code>===</code> en vez de <code>==</code></li><li><code>??</code> para valores por defecto</li><li><code>?.</code> para acceso seguro</li><li>8 valores falsy</li></ul></div>
+    <div class="card"><h3>Control de flujo</h3><ul><li><code>if</code> / ternario / <code>switch</code></li><li><code>for…of</code> para valores</li><li><code>for…in</code> para claves</li><li><code>break</code> / <code>continue</code></li></ul></div>
+    <div class="card"><h3>Funciones</h3><ul><li>declaración · expresión · flecha</li><li>parámetros por defecto y rest</li><li>los closures recuerdan su alcance</li><li>las funciones son valores</li></ul></div>
+    <div class="card"><h3>this</h3><ul><li>lo define quien llama</li><li>las flechas lo heredan</li><li><code>bind</code> lo fija</li><li>métodos → funciones normales</li></ul></div>
+    <div class="card"><h3>Objetos y arrays</h3><ul><li>desestructuración</li><li>spread para copiar/combinar</li><li><code>map</code> / <code>filter</code> / <code>reduce</code></li><li>cuidado con la mutación</li></ul></div>
+    <div class="card"><h3>Errores y asincronía</h3><ul><li><code>try / catch / finally</code></li><li>síncrono → micro → macro</li><li>Promesas</li><li><code>async</code> / <code>await</code></li></ul></div>
+  </div>
+
+  <h2 style="margin-top:40px">Sintaxis de un vistazo</h2>
+  <div class="cols even">
+    <div>
+<textarea class="snippet">
+// Variables
+const name = "Ana";          // no se puede reasignar
+let count = 0;               // se puede reasignar
+
+// Template literal
+const msg = `Hola ${name}, tienes ${count} mensajes`;
+
+// Funciones
+function add(a, b = 0) { return a + b; }
+const square = x => x * x;
+const sum = (...nums) => nums.reduce((t, n) => t + n, 0);
+
+// Desestructuración y spread
+const { title, year = 2026 } = book;
+const [first, ...rest] = list;
+const copy = { ...user, role: "admin" };
+</textarea>
+    </div>
+    <div>
+<textarea class="snippet">
+// Valores por defecto y acceso seguro
+const size = options.size ?? 10;
+const city = user?.address?.city;
+
+// Igualdad: siempre estricta
+if (a === b) { /* ... */ }
+
+// Falsy: false 0 -0 0n "" null undefined NaN
+
+// Arrays
+const names = users
+  .filter(u => u.active)
+  .map(u => u.name);
+
+// Errores y asincronía
+async function load() {
+  try {
+    const res = await fetch(url);
+    return await res.json();
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+</textarea>
+    </div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
