@@ -6,8 +6,9 @@
 
 | Archivo | Propósito |
 |---------|-----------|
-| `index.html` | Presentación interactiva principal (37 diapositivas) |
+| `index.html` | Presentación interactiva principal (33 diapositivas) |
 | `ejercicios/` | Ejercicios por sección, enlazados desde la diapositiva correspondiente (ver abajo) |
+| `errores-y-asincronia.html` | Bloque opcional 07 · Errores y asincronía (se abre desde la última diapositiva) |
 | `cheatsheet.html` | Resumen en una página + referencia de sintaxis (imprimible) |
 | `quiz.html` | Quiz final de 6 preguntas con puntaje |
 | `qa.html` | Preguntas, recursos y próximos pasos |
@@ -22,7 +23,7 @@
 | `ejercicios/funciones.html` | Quiz: la trampa de los closures | “Alcance y closures” |
 | `ejercicios/funciones.html` | Reto: `isPalindrome(text)` | “this y funciones flecha” |
 | `ejercicios/objetos-y-arrays.html` | Reto: `getAdultNames(people)` | “Métodos de array” |
-| `ejercicios/asincronia.html` | Quiz: el event loop | “El event loop” |
+| `ejercicios/asincronia.html` | Quiz: el event loop | Tema “El event loop” de `errores-y-asincronia.html` |
 
 Cada ejercicio tiene un enlace “← Volver a la diapositiva” que regresa exactamente a la diapositiva de origen, y sus notas para el presentador aparecen como un bloque desplegable.
 
@@ -48,16 +49,16 @@ Al terminar la sesión, los asistentes deberían poder:
 |----|---------------------------|--------|---------------------------------------------------------------------------------------------------------|----------------------------------------------|
 | 00 | Introducción              | 5 min  | Qué es JS, historia, ECMAScript, dónde se ejecuta, cómo ejecutar código                                 | Editor “Hola JS”                             |
 | 01 | Sintaxis y variables      | 10 min | Sentencias vs. expresiones, comentarios, identificadores, `var` / `let` / `const`, alcance de bloque, hoisting, TDZ | Editores + quiz de hoisting       |
-| 02 | Tipos de datos            | 10 min | 7 primitivos + objetos, `typeof`, strings y template literals, números, `NaN`, BigInt, valor vs. referencia | Editores                                 |
+| 02 | Tipos de datos            | 10 min | 7 primitivos + objetos, `typeof`, números, `NaN`, BigInt, strings y template literals, valor vs. referencia | Editores                                 |
 | 03 | Operadores                | 15 min | Aritméticos, asignación, `++`, comparación `==` vs `===`, coerción, lógicos y cortocircuito, truthy/falsy, `?:`, `??`, `?.`, spread, precedencia | Matriz de igualdad, tarjetas de coerción, probador de truthiness, laboratorio de operadores |
 | 04 | Control de flujo          | 8 min  | `if / else`, `switch`, `for`, `while`, `for…of`, `for…in`, `break` / `continue`                          | Editores (demo de protección contra bucles infinitos) |
 | 05 | Funciones                 | 20 min | Declaraciones vs. expresiones vs. flechas, parámetros por defecto y rest, valores de retorno, alcance, closures, funciones de orden superior, callbacks, `this` | Editores, quiz de closures, reto de código |
 | 06 | Objetos y arrays          | 10 min | Objetos literales, acceso con punto/corchetes, métodos, desestructuración, spread, métodos de array, encadenamiento, mutación | Editores + reto de código |
-| 07 | Errores y asincronía      | 7 min  | `try / catch / finally`, `throw`, errores propios, event loop, Promesas, `async / await`                  | Quiz del event loop + editores               |
+| 07 | Errores y asincronía *(opcional)* | 7 min  | `try / catch / finally`, `throw`, errores propios, event loop, Promesas, `async / await`                  | Página aparte, enlazada desde la última diapositiva |
 | 08 | Cierre                    | 5 min  | Hoja de referencia, quiz final, recursos, preguntas                                                      | Quiz con puntaje                             |
-|    | **Total**                 | **90 min** |                                                                                                     |                                              |
+|    | **Total**                 | **83 min** + 7 opcional |                                                                                                     |                                              |
 
-> ¿Te quedas corto de tiempo? Comprime **Control de flujo** (la mayoría lo conoce de otros lenguajes) y omite el segundo reto de código. ¿Te sobra tiempo? Convierte el quiz final en una votación grupal.
+> ¿Te quedas corto de tiempo? Comprime **Control de flujo** (la mayoría lo conoce de otros lenguajes) y omite el segundo reto de código. ¿Te sobra tiempo? Abre el bloque opcional **07 · Errores y asincronía** o convierte el quiz final en una votación grupal.
 
 ---
 
@@ -80,8 +81,8 @@ Al terminar la sesión, los asistentes deberían poder:
 ### 02 · Tipos de datos (10 min)
 - `string`, `number`, `bigint`, `boolean`, `undefined`, `null`, `symbol` + `object`.
 - `typeof null === "object"` (bug histórico); para arrays usa `Array.isArray`.
-- Template literals, métodos comunes de string, los strings son inmutables.
 - Punto flotante (`0.1 + 0.2`), `NaN !== NaN`, `Number.isNaN`, conversión de strings, BigInt.
+- Template literals, métodos comunes de string, los strings son inmutables.
 - Los primitivos se copian por valor; los objetos por referencia. `{} === {}` es `false`.
 
 ### 03 · Operadores (15 min)
@@ -115,7 +116,8 @@ Al terminar la sesión, los asistentes deberían poder:
 - Métodos que mutan (`push`, `sort`) vs. que no mutan (copia con spread).
 - Reto: `getAdultNames(people)`.
 
-### 07 · Errores y asincronía (7 min)
+### 07 · Errores y asincronía (7 min, opcional)
+- Ya no forma parte de la presentación principal: está en `errores-y-asincronia.html`, enlazada desde la última diapositiva y desde la tarjeta 07 de la agenda. Úsala si sobra tiempo o como material de repaso.
 - `try / catch / finally`, `throw`, tipos de error incorporados, subclases propias de `Error`.
 - Event loop: código síncrono → microtareas (Promesas) → macrotareas (temporizadores).
 - Promesas (`then` / `catch`) y `async / await` con `try / catch`.

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opcional: Errores y asincronía — Fundamentos de JavaScript</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="page">
+<div class="page-wrap">
+  <nav class="page-nav" aria-label="Páginas de la sesión">
+    <a class="brand" href="index.html#end"><img src="assets/badge-club.png" alt="Chicas Programadoras Club"> ← Volver a la presentación</a>
+    <a class="tab current" href="errores-y-asincronia.html" aria-current="page">⚡ Opcional: Errores y asincronía</a>
+    <a class="tab" href="cheatsheet.html">📋 Hoja de referencia</a>
+    <a class="tab" href="quiz.html">🧠 Quiz final</a>
+    <a class="tab" href="qa.html">🙋 Preguntas</a>
+  </nav>
+
+  <span class="kicker">07 · Contenido opcional</span>
+  <h1>Errores y asincronía</h1>
+  <p class="lead">Un bloque extra para cuando sobra tiempo o para repasar después de la sesión: cómo manejar errores y cómo JavaScript trabaja con tareas que tardan.</p>
+  <div class="topics" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px"><a class="chip" href="#manejo-de-errores">try / catch</a><a class="chip" href="#manejo-de-errores">throw</a><a class="chip" href="#manejo-de-errores">errores propios</a><a class="chip" href="#event-loop">event loop</a><a class="chip" href="#promesas">Promise</a><a class="chip" href="#promesas">async / await</a></div>
+
+  <section class="topic" id="manejo-de-errores">
+    <div class="exercise-head"><h2>Manejo de errores</h2></div>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li><code>throw</code> lanza cualquier valor, pero es mejor usar objetos <code>Error</code> (incluyen el stack trace).</li>
+        <li><code>try</code> ejecuta el código, <code>catch</code> maneja el error, <code>finally</code> se ejecuta <b>siempre</b> (limpieza).</li>
+        <li>Tipos incorporados: <code>Error</code>, <code>TypeError</code>, <code>RangeError</code>, <code>ReferenceError</code>, <code>SyntaxError</code>.</li>
+        <li>Extiende <code>Error</code> para errores propios de tu dominio.</li>
+        <li>Un error no capturado detiene el script actual.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="errores.js">
+function divide(a, b) {
+  if (typeof a !== "number" || typeof b !== "number") {
+    throw new TypeError("Ambos argumentos deben ser números");
+  }
+  if (b === 0) {
+    throw new RangeError("No se puede dividir entre cero");
+  }
+  return a / b;
+}
+
+try {
+  console.log(divide(10, 2));
+  console.log(divide(1, 0));
+  console.log("Esta línea nunca se ejecuta");
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+} finally {
+  console.log("finally siempre se ejecuta 🧹");
+}
+
+class ValidationError extends Error {
+  constructor(field) {
+    super(`Campo inválido: ${field}`);
+    this.name = "ValidationError";
+  }
+}
+
+try {
+  throw new ValidationError("email");
+} catch (e) {
+  console.log(e instanceof ValidationError, e.message);
+}
+
+// Descomenta para ver un error no capturado:
+// null.length;
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Cambia <code>divide(1, 0)</code> por <code>divide("1", 2)</code> para activar la rama del TypeError.</li>
+    </ul>
+  </details>
+  </section>
+
+  <section class="topic" id="event-loop">
+    <div class="exercise-head"><h2>El event loop</h2></div>
+  <div style="max-width:900px">
+    <div>
+      <p>JavaScript hace <b>una cosa a la vez</b>. El trabajo lento (temporizadores, red, archivos) se delega y su callback queda en cola para después:</p>
+      <ol>
+        <li>Primero se ejecuta todo el <b>código síncrono</b>.</li>
+        <li>Luego las <b>microtareas</b>: callbacks de Promesas (<code>then</code>, <code>await</code>).</li>
+        <li>Luego las <b>macrotareas</b>: <code>setTimeout</code>, eventos, E/S.</li>
+      </ol>
+      <div class="callout"><code>setTimeout(fn, 0)</code> no significa “ahora”, sino “lo antes posible <b>después</b> del trabajo actual”.</div>
+      <a class="exercise-link" href="ejercicios/asincronia.html#quiz-event-loop"><span class="i">⏱️</span><span class="t"><b>Ejercicio</b>Quiz: ¿en qué orden se imprime?</span><span class="go">→</span></a>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Explica el orden aquí y luego abre el ejercicio para votar y verificarlo en vivo.</li>
+    </ul>
+  </details>
+  </section>
+
+  <section class="topic" id="promesas">
+    <div class="exercise-head"><h2>Promesas y <code>async</code> / <code>await</code></h2></div>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Una <b>Promesa</b> representa un valor que estará disponible más tarde: <i>pending</i> → <i>fulfilled</i> o <i>rejected</i>.</li>
+        <li>Se consume con <code>.then()</code> / <code>.catch()</code>…</li>
+        <li>…o con <code>await</code> dentro de una función <code>async</code>: se lee como código síncrono y usa <code>try / catch</code> normal.</li>
+        <li><code>Promise.all([...])</code> ejecuta varias en paralelo.</li>
+      </ul>
+      <div class="callout">Ejemplo real: <code>const res = await fetch(url); const data = await res.json();</code></div>
+    </div>
+    <div>
+<textarea class="code" data-name="async.js">
+// Llamada a una API simulada
+function fetchUser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (id > 0) resolve({ id, name: "Ana" });
+      else reject(new Error(`Usuario ${id} no encontrado`));
+    }, 800);
+  });
+}
+
+// Encadenamiento de Promesas
+fetchUser(1)
+  .then(user => console.log("then:", user))
+  .catch(err => console.error(err.message));
+
+// async / await
+async function main() {
+  try {
+    const user = await fetchUser(2);
+    console.log("await:", user);
+    await fetchUser(-1);
+  } catch (err) {
+    console.error("capturado:", err.message);
+  }
+}
+
+main();
+console.log("¡Yo me ejecuto primero! ⚡");
+</textarea>
+    </div>
+  </div>
+  <details class="tips"><summary>💡 Notas para el presentador</summary>
+    <ul>
+      <li>Fíjate en los tiempos: “¡Yo me ejecuto primero!” aparece de inmediato; lo demás tras ~0,8 s y ~1,6 s.</li>
+    </ul>
+  </details>
+  </section>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

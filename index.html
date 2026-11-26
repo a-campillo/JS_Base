@@ -27,7 +27,7 @@
 </section>
 
 <section class="slide" data-section="Introducción" data-title="Agenda">
-  <span class="kicker">Agenda · ~90 min</span>
+  <span class="kicker">Agenda · ~85 min + bloque opcional</span>
   <h2>Lo que veremos hoy</h2>
   <div class="agenda">
     <button data-goto="Introducción"><span class="n">00</span><span class="t">Introducción</span><span class="d">5 min</span><span class="s">Qué es JS, historia, dónde se ejecuta</span></button>
@@ -37,7 +37,7 @@
     <button data-goto="Control de flujo"><span class="n">04</span><span class="t">Control de flujo</span><span class="d">8 min</span><span class="s">if / switch, for, while, for…of, for…in</span></button>
     <button data-goto="Funciones"><span class="n">05</span><span class="t">Funciones</span><span class="d">20 min</span><span class="s">Declaraciones, flechas, parámetros, closures, this</span></button>
     <button data-goto="Objetos y arrays"><span class="n">06</span><span class="t">Objetos y arrays</span><span class="d">10 min</span><span class="s">Desestructuración, spread, map / filter / reduce</span></button>
-    <button data-goto="Errores y asincronía"><span class="n">07</span><span class="t">Errores y asincronía</span><span class="d">7 min</span><span class="s">try / catch, event loop, Promesas, async / await</span></button>
+    <a href="errores-y-asincronia.html"><span class="n">07</span><span class="t">Errores y asincronía</span><span class="d">opcional</span><span class="s">try / catch, event loop, Promesas, async / await ↗</span></a>
     <button data-goto="Cierre"><span class="n">08</span><span class="t">Cierre</span><span class="d">5 min</span><span class="s">Hoja de referencia, quiz final, recursos, preguntas</span></button>
   </div>
   <aside class="notes">
@@ -194,8 +194,9 @@ console.log($price, _isPrivate);
         </tbody>
       </table>
       <div class="callout good"><b>Regla práctica:</b> usa <code>const</code> por defecto, <code>let</code> cuando necesites reasignar y evita <code>var</code>.</div>
+      <div class="callout warn"><b>¿Por qué evitar <code>var</code>?</b> Permite <b>redeclarar</b> la misma variable sin ningún aviso: si dos partes del código usan el mismo nombre, la segunda <b>pisa en silencio</b> a la primera. Con <code>let</code> y <code>const</code>, el error se detecta al instante (<code>SyntaxError</code>).</div>
       <div class="callout warn"><code>const</code> hace constante la <b>referencia</b>, no el valor. Los objetos y arrays todavía se pueden modificar.</div>
-      <p class="small muted">Pruébalo: descomenta la línea <code>pi = 3</code> y ejecuta de nuevo.</p>
+      <p class="small muted">Pruébalo: descomenta la línea <code>pi = 3</code> o la redeclaración con <code>let</code> y ejecuta de nuevo.</p>
       <a class="exercise-link" href="ejercicios/sintaxis-y-variables.html#quiz-hoisting"><span class="i">🏋️</span><span class="t"><b>Ejercicio</b>Quiz: hoisting</span><span class="go">→</span></a>
     </div>
     <div>
@@ -219,6 +220,15 @@ if (true) {
 }
 console.log(a);
 console.log(typeof b);      // aquí afuera b no existe
+
+// Redeclaración: var la permite en silencio
+var total = 100;
+// ... muchas líneas después ...
+var total = 0;              // 😱 sin error: se perdió el 100
+console.log("total:", total);
+
+// let score = 1;
+// let score = 2;           // ❌ SyntaxError: ya fue declarada
 </textarea>
     </div>
   </div>
@@ -226,6 +236,7 @@ console.log(typeof b);      // aquí afuera b no existe
     <ul>
       <li>Descomenta <code>pi = 3</code> en vivo para mostrar el TypeError en la consola.</li>
       <li>El alcance de bloque es la razón principal para preferir <code>let</code>/<code>const</code>: menos fugas accidentales.</li>
+      <li>Redeclaración: ejecuta y muestra que <code>total</code> vale 0 sin ningún aviso. Luego descomenta las dos líneas de <code>score</code>: el <code>SyntaxError</code> impide que se ejecute todo el script, porque el motor lo detecta antes de correr el código.</li>
     </ul>
   </aside>
 </section>
@@ -236,7 +247,7 @@ console.log(typeof b);      // aquí afuera b no existe
 <section class="slide divider" data-section="Tipos de datos" data-title="Sección: Tipos de datos">
   <div class="big-num">02</div>
   <h1>Tipos de datos</h1>
-  <div class="topics"><span class="chip">primitivos</span><span class="chip">objetos</span><span class="chip">typeof</span><span class="chip">strings</span><span class="chip">números</span><span class="chip">valor vs. referencia</span></div>
+  <div class="topics"><span class="chip">primitivos</span><span class="chip">objetos</span><span class="chip">typeof</span><span class="chip">números</span><span class="chip">strings</span><span class="chip">valor vs. referencia</span></div>
 </section>
 
 <section class="slide" data-section="Tipos de datos" data-title="Tipos y typeof">
@@ -281,6 +292,47 @@ console.log(Array.isArray([1, 2])); // ✅ así se comprueba un array
   </aside>
 </section>
 
+<section class="slide" data-section="Tipos de datos" data-title="Números">
+  <span class="kicker">02 · Tipos de datos</span>
+  <h2>Números (y sus rarezas)</h2>
+  <div class="cols">
+    <div>
+      <ul class="points">
+        <li>Un solo tipo <code>number</code> para enteros y decimales (punto flotante de 64 bits).</li>
+        <li><code>0.1 + 0.2 !== 0.3</code>: no es un bug de JS, así funciona el punto flotante binario.</li>
+        <li><code>NaN</code> (“Not a Number”) es un número… y no es igual a sí mismo. Usa <code>Number.isNaN()</code>.</li>
+        <li>Dividir entre cero da <code>Infinity</code>, no un error.</li>
+        <li>Los enteros mayores que <code>2<sup>53</sup> − 1</code> pierden precisión → usa <code>BigInt</code>.</li>
+      </ul>
+    </div>
+    <div>
+<textarea class="code" data-name="numeros.js">
+console.log(0.1 + 0.2);              // ¡punto flotante!
+console.log((0.1 + 0.2).toFixed(2));
+console.log(7 / 2, Math.floor(7 / 2), 7 % 2);
+console.log(1 / 0, -1 / 0);
+
+console.log("abc" * 2);              // NaN
+console.log(NaN === NaN);            // ¡false!
+console.log(Number.isNaN("abc" * 2));
+
+console.log(Number("42"), parseInt("42px"), parseFloat("3.5em"));
+console.log(Number("42px"));         // NaN: Number() es estricto
+
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(9007199254740992 + 1);   // se pierde precisión
+console.log(9007199254740992n + 1n); // BigInt ✅
+</textarea>
+    </div>
+  </div>
+  <aside class="notes">
+    <ul>
+      <li>Para dinero, trabaja en centavos (enteros) o usa una librería de decimales.</li>
+      <li><code>parseInt</code> lee hasta donde puede; <code>Number</code> exige que todo el string sea numérico.</li>
+    </ul>
+  </aside>
+</section>
+
 <section class="slide" data-section="Tipos de datos" data-title="Strings">
   <span class="kicker">02 · Tipos de datos</span>
   <h2>Strings y template literals</h2>
@@ -320,47 +372,6 @@ console.log(s);    // sigue siendo "gato": los strings son inmutables
   <aside class="notes">
     <ul>
       <li>Los template literals aceptan cualquier expresión dentro de <code>${}</code>, incluidas llamadas a funciones y ternarios.</li>
-    </ul>
-  </aside>
-</section>
-
-<section class="slide" data-section="Tipos de datos" data-title="Números">
-  <span class="kicker">02 · Tipos de datos</span>
-  <h2>Números (y sus rarezas)</h2>
-  <div class="cols">
-    <div>
-      <ul class="points">
-        <li>Un solo tipo <code>number</code> para enteros y decimales (punto flotante de 64 bits).</li>
-        <li><code>0.1 + 0.2 !== 0.3</code>: no es un bug de JS, así funciona el punto flotante binario.</li>
-        <li><code>NaN</code> (“Not a Number”) es un número… y no es igual a sí mismo. Usa <code>Number.isNaN()</code>.</li>
-        <li>Dividir entre cero da <code>Infinity</code>, no un error.</li>
-        <li>Los enteros mayores que <code>2<sup>53</sup> − 1</code> pierden precisión → usa <code>BigInt</code>.</li>
-      </ul>
-    </div>
-    <div>
-<textarea class="code" data-name="numeros.js">
-console.log(0.1 + 0.2);              // ¡punto flotante!
-console.log((0.1 + 0.2).toFixed(2));
-console.log(7 / 2, Math.floor(7 / 2), 7 % 2);
-console.log(1 / 0, -1 / 0);
-
-console.log("abc" * 2);              // NaN
-console.log(NaN === NaN);            // ¡false!
-console.log(Number.isNaN("abc" * 2));
-
-console.log(Number("42"), parseInt("42px"), parseFloat("3.5em"));
-console.log(Number("42px"));         // NaN: Number() es estricto
-
-console.log(Number.MAX_SAFE_INTEGER);
-console.log(9007199254740992 + 1);   // se pierde precisión
-console.log(9007199254740992n + 1n); // BigInt ✅
-</textarea>
-    </div>
-  </div>
-  <aside class="notes">
-    <ul>
-      <li>Para dinero, trabaja en centavos (enteros) o usa una librería de decimales.</li>
-      <li><code>parseInt</code> lee hasta donde puede; <code>Number</code> exige que todo el string sea numérico.</li>
     </ul>
   </aside>
 </section>
@@ -1168,150 +1179,6 @@ console.log(nums, sorted);
 </section>
 
 <!-- =====================================================================
-     07 · ERRORES Y ASINCRONÍA
-     ===================================================================== -->
-<section class="slide divider" data-section="Errores y asincronía" data-title="Sección: Errores y asincronía">
-  <div class="big-num">07</div>
-  <h1>Errores y asincronía</h1>
-  <div class="topics"><span class="chip">try / catch</span><span class="chip">throw</span><span class="chip">errores propios</span><span class="chip">event loop</span><span class="chip">Promise</span><span class="chip">async / await</span></div>
-</section>
-
-<section class="slide" data-section="Errores y asincronía" data-title="Manejo de errores">
-  <span class="kicker">07 · Errores</span>
-  <h2>Manejo de errores</h2>
-  <div class="cols">
-    <div>
-      <ul class="points">
-        <li><code>throw</code> lanza cualquier valor, pero es mejor usar objetos <code>Error</code> (incluyen el stack trace).</li>
-        <li><code>try</code> ejecuta el código, <code>catch</code> maneja el error, <code>finally</code> se ejecuta <b>siempre</b> (limpieza).</li>
-        <li>Tipos incorporados: <code>Error</code>, <code>TypeError</code>, <code>RangeError</code>, <code>ReferenceError</code>, <code>SyntaxError</code>.</li>
-        <li>Extiende <code>Error</code> para errores propios de tu dominio.</li>
-        <li>Un error no capturado detiene el script actual.</li>
-      </ul>
-    </div>
-    <div>
-<textarea class="code" data-name="errores.js">
-function divide(a, b) {
-  if (typeof a !== "number" || typeof b !== "number") {
-    throw new TypeError("Ambos argumentos deben ser números");
-  }
-  if (b === 0) {
-    throw new RangeError("No se puede dividir entre cero");
-  }
-  return a / b;
-}
-
-try {
-  console.log(divide(10, 2));
-  console.log(divide(1, 0));
-  console.log("Esta línea nunca se ejecuta");
-} catch (error) {
-  console.error(`${error.name}: ${error.message}`);
-} finally {
-  console.log("finally siempre se ejecuta 🧹");
-}
-
-class ValidationError extends Error {
-  constructor(field) {
-    super(`Campo inválido: ${field}`);
-    this.name = "ValidationError";
-  }
-}
-
-try {
-  throw new ValidationError("email");
-} catch (e) {
-  console.log(e instanceof ValidationError, e.message);
-}
-
-// Descomenta para ver un error no capturado:
-// null.length;
-</textarea>
-    </div>
-  </div>
-  <aside class="notes">
-    <ul>
-      <li>Cambia <code>divide(1, 0)</code> por <code>divide("1", 2)</code> para activar la rama del TypeError.</li>
-    </ul>
-  </aside>
-</section>
-
-<section class="slide" data-section="Errores y asincronía" data-title="El event loop" data-slug="event-loop">
-  <span class="kicker">07 · Asincronía</span>
-  <h2>El event loop</h2>
-  <div style="max-width:900px">
-    <div>
-      <p>JavaScript hace <b>una cosa a la vez</b>. El trabajo lento (temporizadores, red, archivos) se delega y su callback queda en cola para después:</p>
-      <ol>
-        <li>Primero se ejecuta todo el <b>código síncrono</b>.</li>
-        <li>Luego las <b>microtareas</b>: callbacks de Promesas (<code>then</code>, <code>await</code>).</li>
-        <li>Luego las <b>macrotareas</b>: <code>setTimeout</code>, eventos, E/S.</li>
-      </ol>
-      <div class="callout"><code>setTimeout(fn, 0)</code> no significa “ahora”, sino “lo antes posible <b>después</b> del trabajo actual”.</div>
-      <a class="exercise-link" href="ejercicios/asincronia.html#quiz-event-loop"><span class="i">⏱️</span><span class="t"><b>Ejercicio</b>Quiz: ¿en qué orden se imprime?</span><span class="go">→</span></a>
-    </div>
-  </div>
-  <aside class="notes">
-    <ul>
-      <li>Explica el orden aquí y luego abre el ejercicio para votar y verificarlo en vivo.</li>
-    </ul>
-  </aside>
-</section>
-
-<section class="slide" data-section="Errores y asincronía" data-title="Promesas y async/await">
-  <span class="kicker">07 · Asincronía</span>
-  <h2>Promesas y <code>async</code> / <code>await</code></h2>
-  <div class="cols">
-    <div>
-      <ul class="points">
-        <li>Una <b>Promesa</b> representa un valor que estará disponible más tarde: <i>pending</i> → <i>fulfilled</i> o <i>rejected</i>.</li>
-        <li>Se consume con <code>.then()</code> / <code>.catch()</code>…</li>
-        <li>…o con <code>await</code> dentro de una función <code>async</code>: se lee como código síncrono y usa <code>try / catch</code> normal.</li>
-        <li><code>Promise.all([...])</code> ejecuta varias en paralelo.</li>
-      </ul>
-      <div class="callout">Ejemplo real: <code>const res = await fetch(url); const data = await res.json();</code></div>
-    </div>
-    <div>
-<textarea class="code" data-name="async.js">
-// Llamada a una API simulada
-function fetchUser(id) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (id > 0) resolve({ id, name: "Ana" });
-      else reject(new Error(`Usuario ${id} no encontrado`));
-    }, 800);
-  });
-}
-
-// Encadenamiento de Promesas
-fetchUser(1)
-  .then(user => console.log("then:", user))
-  .catch(err => console.error(err.message));
-
-// async / await
-async function main() {
-  try {
-    const user = await fetchUser(2);
-    console.log("await:", user);
-    await fetchUser(-1);
-  } catch (err) {
-    console.error("capturado:", err.message);
-  }
-}
-
-main();
-console.log("¡Yo me ejecuto primero! ⚡");
-</textarea>
-    </div>
-  </div>
-  <aside class="notes">
-    <ul>
-      <li>Fíjate en los tiempos: “¡Yo me ejecuto primero!” aparece de inmediato; lo demás tras ~0,8 s y ~1,6 s.</li>
-    </ul>
-  </aside>
-</section>
-
-<!-- =====================================================================
      08 · CIERRE — enlaces a las páginas independientes
      ===================================================================== -->
 <section class="slide" data-section="Cierre" data-title="Cierre: hoja de referencia, quiz y preguntas" data-hide-badge>
@@ -1339,10 +1206,12 @@ console.log("¡Yo me ejecuto primero! ⚡");
       <span class="go">Abrir →</span>
     </a>
   </div>
+  <a class="exercise-link optional-link" href="errores-y-asincronia.html"><span class="i">⚡</span><span class="t"><b>Opcional · si sobra tiempo</b>07 · Errores y asincronía: try / catch, event loop, Promesas y async / await</span><span class="go">→</span></a>
   <p class="hint">¡Gracias por participar! Toda la presentación funciona sin conexión; compártanla libremente.</p>
   <aside class="notes">
     <ul>
       <li>Orden sugerido: hoja de referencia (1 min) → quiz con votación en grupo (2 min) → preguntas.</li>
+      <li>Si sobra tiempo (o el grupo lo pide), abre el bloque opcional de Errores y asincronía (~7 min).</li>
       <li>Cada página tiene un enlace “Volver a la presentación” que regresa a esta diapositiva.</li>
     </ul>
   </aside>

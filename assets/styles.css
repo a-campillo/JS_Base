@@ -104,8 +104,8 @@ button.chip:hover { border-color: var(--accent); }
 /* ---------- Agenda ---------- */
 .agenda { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 10px; }
 @media (max-width: 1000px) { .agenda { grid-template-columns: minmax(0, 1fr); } }
-.agenda button { text-align: left; cursor: pointer; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; transition: border-color .2s, transform .2s; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: baseline; }
-.agenda button:hover { border-color: var(--accent); transform: translateY(-2px); }
+.agenda button, .agenda a { text-decoration: none; color: inherit; text-align: left; cursor: pointer; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; transition: border-color .2s, transform .2s; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: baseline; }
+.agenda button:hover, .agenda a:hover { border-color: var(--accent); transform: translateY(-2px); }
 .agenda .n { font: 700 22px/1 var(--code-font); color: var(--accent); grid-row: span 2; }
 .agenda .t { font-weight: 650; font-size: 19px; }
 .agenda .d { font: 13px/1 var(--code-font); color: var(--muted); }
@@ -329,7 +329,7 @@ body.page { overflow: auto; background: radial-gradient(1100px 620px at 100% 0%,
 .exercise-link .t b { display: block; font: 700 12px var(--code-font); letter-spacing: .12em; text-transform: uppercase; color: var(--pink); margin-bottom: 3px; }
 .exercise-link .go { font: 700 20px var(--code-font); color: var(--accent); }
 
-.exercise { background: rgba(27, 23, 41, .55); border: 1px solid var(--border); border-radius: 18px; padding: 22px 24px 18px; margin-top: 26px; scroll-margin-top: 20px; }
+.exercise, .topic { background: rgba(27, 23, 41, .55); border: 1px solid var(--border); border-radius: 18px; padding: 22px 24px 18px; margin-top: 26px; scroll-margin-top: 20px; }
 .exercise:target { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(235, 68, 133, .25); }
 .exercise-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; margin-bottom: 14px; }
 .exercise-head h2 { margin: 0; }
@@ -339,3 +339,9 @@ details.tips { margin-top: 16px; color: var(--muted); font-size: 15px; }
 details.tips summary { cursor: pointer; font-weight: 700; color: var(--muted); }
 details.tips ul { margin: 8px 0 0; }
 details.tips li { font-size: 15px; }
+a.chip { text-decoration: none; }
+a.chip:hover { border-color: var(--accent); }
+.optional-link { border-style: dashed; border-color: rgba(215, 238, 73, .5); background: linear-gradient(135deg, rgba(215, 238, 73, .08), rgba(88, 85, 160, .18)); }
+.optional-link .t b { color: var(--accent); }
+.agenda a .d { color: var(--accent); }
+.topic:target { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(235, 68, 133, .25); }
