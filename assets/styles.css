@@ -345,3 +345,12 @@ a.chip:hover { border-color: var(--accent); }
 .optional-link .t b { color: var(--accent); }
 .agenda a .d { color: var(--accent); }
 .topic:target { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(235, 68, 133, .25); }
+
+/* ---------- Final slide: link to the GitHub repo ---------- */
+.closing-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 22px; }
+.closing-row .hint { margin: 0; }
+.repo-link { display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--panel); color: var(--text); text-decoration: none; transition: border-color .2s, transform .2s; }
+.repo-link:hover, .repo-link:focus-visible { border-color: var(--accent); transform: translateY(-2px); outline: none; }
+.repo-link svg { width: 26px; height: 26px; flex: none; }
+.repo-link span { font: 600 15px var(--code-font); }
+.repo-link b { display: block; font: 700 11px var(--code-font); letter-spacing: .12em; text-transform: uppercase; color: var(--pink); margin-bottom: 2px; }
